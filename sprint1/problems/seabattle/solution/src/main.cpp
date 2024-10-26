@@ -167,7 +167,7 @@ private:
         std::string enemy_shot_coordinates_str = ReadMove(socket);
         std::cout << "Enemy shoot at: "sv << enemy_shot_coordinates_str << std::endl;
         auto parsed_coords = ParseMove(enemy_shot_coordinates_str);
-        auto shot_result = my_field_.Shoot(parsed_coords->first, parsed_coords->second);
+        auto shot_result = my_field_.Shoot(parsed_coords->second, parsed_coords->first);
 
         SendResult(socket, shot_result);
         MarkShot(my_field_, parsed_coords, shot_result);
@@ -206,15 +206,15 @@ private:
     void MarkShot(SeabattleField& field, std::optional<std::pair<int,int>> shot_coords,SeabattleField::ShotResult result){
         switch(result){
             case SeabattleField::ShotResult::HIT:
-                field.MarkHit(shot_coords->first, shot_coords->second);
+                field.MarkHit(shot_coords->second, shot_coords->first);
                 std::cout << "Hit the ship!"sv << std::endl;
                 break;
             case SeabattleField::ShotResult::KILL:
-                field.MarkKill(shot_coords->first, shot_coords->second);
+                field.MarkKill(shot_coords->second, shot_coords->first);
                 std::cout << "Kill the ship!"sv << std::endl;
                 break;
             case SeabattleField::ShotResult::MISS:
-                field.MarkMiss(shot_coords->first, shot_coords->second);
+                field.MarkMiss(shot_coords->second, shot_coords->first);
                 std::cout << "Miss!"sv << std::endl;
                 break;
         }
@@ -258,7 +258,7 @@ void StartClient(const SeabattleField& field, const std::string& ip_str, unsigne
 
     socket.connect(endpoint, err_code);
     if(err_code){
-        std::cout << "Could not connect to the server!"sv << std::endl;
+        std::cout << "Could not connect to the server!"sv << err_code.message() <<std::endl;
         std::exit(1);
     }
 
