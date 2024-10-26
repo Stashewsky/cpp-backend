@@ -67,9 +67,9 @@ public:
         : my_field_(field) {
     }
 
-    void StartGame(tcp::socket& socket, bool my_initiative) {
+    void StartGame(tcp::socket& socket, bool is_my_turn) {
         // TODO: реализуйте самостоятельно
-        bool my_turn = my_initiative;
+        bool my_turn = is_my_turn;
         while(!IsGameEnded()){
             if(my_turn){
                 my_turn = MakeMyShot(socket);
@@ -125,7 +125,8 @@ private:
         user_shot_coordinates_str.push_back('\n');
 
         SendMove(socket, user_shot_coordinates_str);
-        SeabattleField::ShotResult shot_result = ReadResult(socket);
+        std::string shot_result_str = ReadResult(socket);
+        SeabattleField::ShotResult shot_result = static_cast<SeabattleField::ShotResult>(std::stoi(shot_result_str));
         MarkShot(other_field_, parsed_coordinates, shot_result);
         return shot_result != SeabattleField::ShotResult::MISS;
     }
@@ -140,7 +141,7 @@ private:
         }
     }
 
-    SeabattleField::ShotResult ReadResult(tcp::socket& socket){
+    std::string ReadResult(tcp::socket& socket){
         boost::system::error_code err_code;
         net::streambuf stream_buffer;
         net::read_until(socket, stream_buffer, '\n', err_code);
@@ -157,10 +158,11 @@ private:
             std::cout << "Shot result error!"sv << std::endl;
             std::exit(1);
         }
-        return static_cast<SeabattleField::ShotResult>(std::stoi(shot_result_str));
+        return shot_result_str;
     }
 
     bool MakeEnemyShot(tcp::socket& socket){
+        boost::system::error_code err_code;
         PrintFields();
         std::string enemy_shot_coordinates_str = ReadMove(socket);
         std::cout << "Enemy shoot at: "sv << enemy_shot_coordinates_str << std::endl;
@@ -169,7 +171,7 @@ private:
 
         SendResult(socket, shot_result);
         MarkShot(my_field_, parsed_coords, shot_result);
-        return shot_result != SeabattleField::ShotResult::MISS;
+        return shot_result == SeabattleField::ShotResult::MISS;
     }
     
     std::string ReadMove(tcp::socket& socket){
