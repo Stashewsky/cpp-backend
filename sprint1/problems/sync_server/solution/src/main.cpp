@@ -11,6 +11,7 @@
 #include <boost/asio/write.hpp>
 #include <iostream>
 #include <thread>
+#include <optional>
 
 namespace net = boost::asio;
 using tcp = net::ip::tcp;
@@ -59,6 +60,7 @@ StringResponse MakeStringResponse(http::status status, std::string_view body,
     response.body() = body;
     response.content_length(response.body().size());
     response.keep_alive(keep_alive);
+    return response;
 }
 
 StringResponse MakeStringGetResponse(http::status status, std::string_view body,
