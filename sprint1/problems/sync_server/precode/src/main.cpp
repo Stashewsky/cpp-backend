@@ -18,5 +18,7 @@ namespace beast = boost::beast;
 namespace http = beast::http;
 
 int main() {
+    net::io_context io_ctx;
     // Выведите строчку "Server has started...", когда сервер будет готов принимать подключения
+    std::cout << "Server has started..."sv << std::endl;
 }
