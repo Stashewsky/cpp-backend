@@ -28,7 +28,6 @@ struct ContentType{
     ContentType() = delete;
     constexpr static std::string_view TEXT_HTML = "text/html"sv;
 };
-std::optional<StringRequest> ReadRequest(tcp::socket& socket, beast::flat_buffer& buffer);
 std::optional<StringRequest> ReadRequest(tcp::socket& socket, beast::flat_buffer& buffer){
     beast::error_code err_code;
     StringRequest request;
