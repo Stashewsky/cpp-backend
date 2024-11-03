@@ -138,7 +138,7 @@ int main(){
     constexpr short port = 8080;
 
     tcp::acceptor acceptor(io_ctx, {ip_adress, port});
-    std::cout << "Waiting for socket connection..."sv << std::endl;
+    std::cout << "server has started..."sv << std::endl;
 
      while(true){
          tcp::socket socket(io_ctx);
