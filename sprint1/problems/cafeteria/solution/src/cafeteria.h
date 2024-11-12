@@ -62,6 +62,7 @@ private:
                     net::bind_executor(self->strand_, [self](const sys::error_code& ec){
                         self->StopFrying();
                     }));
+
         });
 
     }
