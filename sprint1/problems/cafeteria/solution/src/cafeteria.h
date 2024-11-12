@@ -11,14 +11,14 @@
 #include <sstream>
 #include <syncstream>
 #include <thread>
+#include "hotdog.h"
+#include "result.h"
 
 namespace net = boost::asio;
 using namespace std::chrono;
 using namespace std::literals;
 using Timer = net::steady_timer;
 
-#include "hotdog.h"
-#include "result.h"
 
 using HotDogHandler = std::function<void(Result<HotDog> hot_dog)>;
 
@@ -51,17 +51,19 @@ private:
     std::shared_ptr<GasCooker> cooker_;
     HotDogHandler handler_;
     net::strand<net::io_context::executor_type> strand_;
-    Timer sausage_frying_timer_{io_, HotDog::MIN_SAUSAGE_COOK_DURATION};
-    Timer bread_baking_timer_{io_, HotDog::MIN_BREAD_COOK_DURATION};
+    Timer sausage_frying_timer_{io_};
+    Timer bread_baking_timer_{io_};
 
 
     void FrySausage() {
-        sausage_->StartFry(*cooker_, [self = shared_from_this()] {});
+        sausage_->StartFry(*cooker_, [self = shared_from_this()] {
+            self->sausage_frying_timer_.expires_after(HotDog::MIN_SAUSAGE_COOK_DURATION);
+            self->sausage_frying_timer_.async_wait(
+                    net::bind_executor(self->strand_, [self](const sys::error_code& ec){
+                        self->StopFrying();
+                    }));
+        });
 
-        sausage_frying_timer_.async_wait(
-                net::bind_executor(strand_, [self = shared_from_this()](const sys::error_code& ec){
-                    self->StopFrying();
-                }));
     }
 
     void StopFrying() {
@@ -74,12 +76,13 @@ private:
 
     void BakeBread() {
         bread_->StartBake(*cooker_, [self = shared_from_this()]{
+            self->bread_baking_timer_.expires_after(HotDog::MIN_BREAD_COOK_DURATION);
+            self->bread_baking_timer_.async_wait(
+                    net::bind_executor(self->strand_, [self](const sys::error_code& ec) {
+                        self->StopBaking();
+                    }));
         });
 
-        bread_baking_timer_.async_wait(
-                net::bind_executor(strand_, [self = shared_from_this()](const sys::error_code& ec) {
-                    self->StopBaking();
-                }));
     }
 
     void StopBaking() {
