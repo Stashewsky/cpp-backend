@@ -1,237 +1,85 @@
-#ifdef WIN32
-#include <sdkddkver.h>
-#endif
+#include "sdk.h"
+//
+#include <boost/asio/signal_set.hpp>
 #include <iostream>
-#include <chrono>
-#include <syncstream>
-#include <boost/asio.hpp>
-#include <memory>
+#include <mutex>
+#include <thread>
+#include <vector>
 
+#include "http_server.h"
+
+namespace {
 namespace net = boost::asio;
-namespace sys = boost::system;
 using namespace std::literals;
-using namespace std::chrono;
+namespace sys = boost::system;
+namespace http = boost::beast::http;
 
-using Timer = net::steady_timer;
+// Запрос, тело которого представлено в виде строки
+using StringRequest = http::request<http::string_body>;
+// Ответ, тело которого представлено в виде строки
+using StringResponse = http::response<http::string_body>;
 
-class Hamburger {
-public:
-    [[nodiscard]] bool IsCutletRoasted() const {
-        return cutlet_roasted_;
-    }
-    void SetCutletRoasted() {
-        if (IsCutletRoasted()) {  // Котлету можно жарить только один раз
-            throw std::logic_error("Cutlet has been roasted already"s);
-        }
-        cutlet_roasted_ = true;
-    }
-
-    [[nodiscard]] bool HasOnion() const {
-        return has_onion_;
-    }
-    // Добавляем лук
-    void AddOnion() {
-        if (IsPacked()) {  // Если гамбургер упакован, класть лук в него нельзя
-            throw std::logic_error("Hamburger has been packed already"s);
-        }
-        AssureCutletRoasted();  // Лук разрешается класть лишь после прожаривания котлеты
-        has_onion_ = true;
-    }
-
-    [[nodiscard]] bool IsPacked() const {
-        return is_packed_;
-    }
-    void Pack() {
-        AssureCutletRoasted();  // Нельзя упаковывать гамбургер, если котлета не прожарена
-        is_packed_ = true;
-    }
-
-private:
-    // Убеждаемся, что котлета прожарена
-    void AssureCutletRoasted() const {
-        if (!cutlet_roasted_) {
-            throw std::logic_error("Cutlet has not been roasted yet"s);
-        }
-    }
-
-    bool cutlet_roasted_ = false;  // Обжарена ли котлета?
-    bool has_onion_ = false;       // Есть ли лук?
-    bool is_packed_ = false;       // Упакован ли гамбургер?
+struct ContentType {
+    ContentType() = delete;
+    constexpr static std::string_view TEXT_HTML = "text/html"sv;
+    // При необходимости внутрь ContentType можно добавить и другие типы контента
 };
 
-std::ostream& operator<<(std::ostream& os, const Hamburger& h) {
-    return os << "Hamburger: "sv << (h.IsCutletRoasted() ? "roasted cutlet"sv : " raw cutlet"sv)
-              << (h.HasOnion() ? ", onion"sv : ""sv)
-              << (h.IsPacked() ? ", packed"sv : ", not packed"sv);
+// Создаёт StringResponse с заданными параметрами
+StringResponse MakeStringResponse(http::status status, std::string_view body, unsigned http_version,
+                                  bool keep_alive,
+                                  std::string_view content_type = ContentType::TEXT_HTML) {
+    StringResponse response(status, http_version);
+    response.set(http::field::content_type, content_type);
+    response.body() = body;
+    response.content_length(body.size());
+    response.keep_alive(keep_alive);
+    return response;
 }
 
-class Logger {
-public:
-    explicit Logger(std::string id)
-            : id_(std::move(id)) {
+StringResponse HandleRequest(StringRequest&& req) {
+    // Подставьте сюда код из синхронной версии HTTP-сервера
+    return MakeStringResponse(http::status::ok, "OK"sv, req.version(), req.keep_alive());
+}
+
+// Запускает функцию fn на n потоках, включая текущий
+template <typename Fn>
+void RunWorkers(unsigned n, const Fn& fn) {
+    n = std::max(1u, n);
+    std::vector<std::jthread> workers;
+    workers.reserve(n - 1);
+    // Запускаем n-1 рабочих потоков, выполняющих функцию fn
+    while (--n) {
+        workers.emplace_back(fn);
     }
+    fn();
+}
 
-    void LogMessage(std::string_view message) const {
-        std::osyncstream os{std::cout};
-        os << id_ << "> ["sv << duration<double>(steady_clock::now() - start_time_).count()
-           << "s] "sv << message << std::endl;
-    }
-
-private:
-    std::string id_;
-    steady_clock::time_point start_time_{steady_clock::now()};
-};
-
-
-// Функция, которая будет вызвана по окончании обработки заказа
-using OrderHandler = std::function<void(sys::error_code ec, int id, Hamburger* hamburger)>;
-
-class Order : public std::enable_shared_from_this<Order> {
-public:
-    Order(net::io_context& io, int id, bool with_onion, OrderHandler handler)
-            : io_{io}
-            , id_{id}
-            , with_onion_{with_onion}
-            , handler_{std::move(handler)} {
-    }
-
-    // Запускает асинхронное выполнение заказа
-    void Execute() {
-        logger_.LogMessage("Order has been started."sv);
-        RoastedCutlet();
-
-        if(with_onion_){
-            MarinadeOnion();
-        }
-    }
-private:
-    net::io_context& io_;
-    int id_;
-    bool with_onion_;
-    OrderHandler handler_;
-    Logger logger_{std::to_string(id_)};
-
-    Hamburger hamburger_;
-    bool onion_marinated_ = false;
-
-    bool delivered_ = false;
-
-    Timer roast_timer_{io_, 1s};
-    Timer onion_marinade_timer_{io_, 2s};
-
-    void RoastedCutlet(){
-        logger_.LogMessage("Start roasting cutlet"sv);
-        roast_timer_.async_wait([self = shared_from_this()](sys::error_code ec){
-           self->OnRoasted(ec);
-        });
-    }
-
-    void OnRoasted(sys::error_code ec){
-        if(ec){
-            logger_.LogMessage("Roast error: "s + ec.what());
-        }else {
-            logger_.LogMessage("On roasted"sv);
-            hamburger_.SetCutletRoasted();
-        }
-        CheckReadiness(ec);
-    }
-
-    void MarinadeOnion(){
-        logger_.LogMessage("Start marinate onion"sv);
-        onion_marinade_timer_.async_wait([self = shared_from_this()](sys::error_code ec){
-            self->OnOnionMarinated(ec);
-        });
-    }
-
-    void OnOnionMarinated(sys::error_code ec){
-        if(ec){
-            logger_.LogMessage("Onion marinate error: "s + ec.what());
-        }else {
-            logger_.LogMessage("Onion has been marinated"sv);
-            onion_marinated_ = true;
-        }
-        CheckReadiness(ec);
-    }
-
-    void Deliver(sys::error_code ec){
-        delivered_ = true;
-        handler_(ec, id_, ec ? nullptr : &hamburger_);
-    }
-
-    [[nodiscard]] bool CanAddOnion() const {
-        return hamburger_.IsCutletRoasted() && onion_marinated_ && !hamburger_.HasOnion();
-    }
-
-    [[nodiscard]] bool IsReadyToPack() const{
-        return hamburger_.IsCutletRoasted() && (!with_onion_ || hamburger_.HasOnion());
-    }
-
-    void Pack(){
-        logger_.LogMessage("Packing"sv);
-
-        auto start = steady_clock::now();
-        while(steady_clock::now() - start < 500ms){}
-
-        hamburger_.Pack();
-        logger_.LogMessage("Packed"sv);
-        Deliver({});
-    }
-    void CheckReadiness(sys::error_code ec){
-        if(delivered_){
-            return;
-        }
-
-        if(ec){
-            Deliver(ec);
-        }
-
-        if(CanAddOnion()){
-            logger_.LogMessage("Add onion"sv);
-            hamburger_.AddOnion();
-        }
-
-        if(IsReadyToPack()){
-            Pack();
-        }
-        logger_.LogMessage(ec.to_string());
-    }
-};
-
-class Restaurant {
-public:
-    explicit Restaurant(net::io_context& io)
-            : io_(io) {
-    }
-
-    int MakeHamburger(bool with_onion, OrderHandler handler) {
-        const int order_id = ++next_order_id_;
-        std::make_shared<Order>(io_, order_id, with_onion, std::move(handler))->Execute();
-        return order_id;
-    }
-
-private:
-    net::io_context& io_;
-    int next_order_id_ = 0;
-};
+}  // namespace
 
 int main() {
-    net::io_context io;
+    const unsigned num_threads = std::thread::hardware_concurrency();
 
-    Restaurant restaurant{io};
+    net::io_context ioc(num_threads);
 
-    Logger logger{"main"s};
-    auto print_result = [&logger](sys::error_code ec, int order_id, Hamburger* hamburger) {
-        std::ostringstream os;
-        if (ec) {
-            os << "Order "sv << order_id << "failed: "sv << ec.what();
-            return;
+    // Подписываемся на сигналы и при их получении завершаем работу сервера
+    net::signal_set signals(ioc, SIGINT, SIGTERM);
+    signals.async_wait([&ioc](const sys::error_code& ec, [[maybe_unused]] int signal_number) {
+        if (!ec) {
+            ioc.stop();
         }
-        os << "Order "sv << order_id << " is ready. "sv << *hamburger;
-        logger.LogMessage(os.str());
-    };
+    });
 
-    for (int i = 0; i < 4; ++i) {
-        restaurant.MakeHamburger(i % 2 == 0, print_result);
-    }
-    io.run();
+    const auto address = net::ip::make_address("0.0.0.0");
+    constexpr net::ip::port_type port = 8080;
+    http_server::ServeHttp(ioc, {address, port}, [](auto&& req, auto&& sender) {
+        // sender(HandleRequest(std::forward<decltype(req)>(req)));
+    });
+
+    // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
+    std::cout << "Server has started..."sv << std::endl;
+
+    RunWorkers(num_threads, [&ioc] {
+        ioc.run();
+    });
 }
