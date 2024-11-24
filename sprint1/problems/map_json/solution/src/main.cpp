@@ -1,9 +1,9 @@
 #include "sdk.h"
 //
 #include <boost/asio/io_context.hpp>
-#include <boost/asio/signal_set.hpp>
 #include <iostream>
 #include <thread>
+#include <boost/asio/signal_set.hpp>
 
 #include "json_loader.h"
 #include "request_handler.h"
@@ -18,8 +18,7 @@ namespace {
     template <typename Fn>
     void RunWorkers(unsigned n, const Fn& fn) {
         n = std::max(1u, n);
-        std::vector<std::thread> workers;
-
+        std::vector<std::jthread> workers;
         workers.reserve(n - 1);
         // Запускаем n-1 рабочих потоков, выполняющих функцию fn
         while (--n) {
@@ -38,13 +37,13 @@ int main(int argc, const char* argv[]) {
     try {
         // 1. Загружаем карту из файла и построить модель игры
         model::Game game = json_loader::LoadGame(argv[1]);
+        //model::Game game = json_loader::LoadGame("../../data/config.json");
 
         // 2. Инициализируем io_context
         const unsigned num_threads = std::thread::hardware_concurrency();
         net::io_context ioc(num_threads);
 
         // 3. Добавляем асинхронный обработчик сигналов SIGINT и SIGTERM
-
         net::signal_set signals(ioc, SIGINT, SIGTERM);
         signals.async_wait([&ioc](const sys::error_code& ec, [[maybe_unused]] int signal_number) {
             if (!ec) {
