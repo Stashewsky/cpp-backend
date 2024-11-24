@@ -58,7 +58,7 @@ namespace jsonBuilder{
         root.as_object()["offices"] = std::move(offices);
     }
 
-    json::value ConvertMapToJson(const model::Map& map){
+    json::value BuildMapJson(const model::Map& map){
         json::value map_json;
         map_json.as_object()["id"] = *map.GetId();
         map_json.as_object()["name"] = map.GetName();
@@ -68,7 +68,7 @@ namespace jsonBuilder{
         return map_json;
     }
 
-    json::value BuildMapNotFoundJsonResponce(){
+    json::value BuildMapNotFoundJsonResponse(){
         json::value root;
         root.as_object()["code"] = "mapNotFound";
         root.as_object()["message"] = "Map not found";

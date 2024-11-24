@@ -18,7 +18,7 @@ namespace {
     template <typename Fn>
     void RunWorkers(unsigned n, const Fn& fn) {
         n = std::max(1u, n);
-        std::vector<jthread> workers;
+        std::vector<std::thread> workers;
 
         workers.reserve(n - 1);
         // Запускаем n-1 рабочих потоков, выполняющих функцию fn

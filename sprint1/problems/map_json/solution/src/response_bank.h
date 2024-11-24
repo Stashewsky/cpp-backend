@@ -50,7 +50,7 @@ namespace responseBank{
         StringResponse response(http::status::ok, req.version());
         auto id = SplitUrl(req.target())[3];
         response.set(http::field::content_type, "application/json");
-        response.body() = json::serialize(jsonBuilder::BuildMapJson(*game.FindMap(model::Map::Id(id))));
+        response.body() = json::serialize(jsonBuilder::BuildMapJson(*game.FindMap(model::Map::Id(std::string(id)))));
         response.content_length(response.body().size());
         response.keep_alive(req.keep_alive());
         return response;
