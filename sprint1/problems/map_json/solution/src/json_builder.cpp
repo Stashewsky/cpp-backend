@@ -15,7 +15,7 @@ namespace jsonBuilder{
         return json_arr;
     }
 
-    void AddRoadsToJson(const model::Map& map, json::value& root){
+    void AddRoadsToJson(const model::Map& map, json::object& root){
         json::array roads;
         for(const auto& item : map.GetRoads()){
             json::object road;
@@ -28,10 +28,10 @@ namespace jsonBuilder{
             }
             roads.emplace_back(std::move(road));
         }
-        root.as_object()["roads"] = std::move(roads);
+        root["roads"] = std::move(roads);
     }
 
-    void AddBuildingsToJson(const model::Map& map, json::value& root){
+    void AddBuildingsToJson(const model::Map& map, json::object& root){
         json::array buildings;
         for(const auto& item : map.GetBuildings()){
             json::object building;
@@ -41,10 +41,10 @@ namespace jsonBuilder{
             building["h"] = item.GetBounds().size.height;
             buildings.emplace_back(std::move(building));
         }
-        root.as_object()["buildings"] = std::move(buildings);
+        root["buildings"] = std::move(buildings);
     }
 
-    void AddOfficesToJson(const model::Map& map, json::value& root){
+    void AddOfficesToJson(const model::Map& map, json::object& root){
         json::array offices;
         for(const auto& item : map.GetOffices()){
             json::object office;
@@ -55,13 +55,13 @@ namespace jsonBuilder{
             office["offsetY"] = item.GetOffset().dy;
             offices.emplace_back(std::move(office));
         }
-        root.as_object()["offices"] = std::move(offices);
+        root["offices"] = std::move(offices);
     }
 
     json::value BuildMapJson(const model::Map& map){
-        json::value map_json;
-        map_json.as_object()["id"] = *map.GetId();
-        map_json.as_object()["name"] = map.GetName();
+        json::object map_json;
+        map_json["id"] = std::string(*map.GetId());
+        map_json["name"] = map.GetName();
         AddRoadsToJson(map, map_json);
         AddBuildingsToJson(map, map_json);
         AddOfficesToJson(map, map_json);
@@ -69,23 +69,23 @@ namespace jsonBuilder{
     }
 
     json::value BuildMapNotFoundJsonResponse(){
-        json::value root;
-        root.as_object()["code"] = "mapNotFound";
-        root.as_object()["message"] = "Map not found";
+        json::object root;
+        root["code"] = "mapNotFound";
+        root["message"] = "Map not found";
         return root;
     };
 
     json::value BuildBadRequestJsonResponse(){
-        json::value root;
-        root.as_object()["code"] = "badRequest";
-        root.as_object()["message"] = "Bad request";
+        json::object root;
+        root["code"] = "badRequest";
+        root["message"] = "Bad request";
         return root;
     };
 
     json::value BuildPageNotFoundJsonResponse(){
-        json::value root;
-        root.as_object()["code"] = "pageNotFound";
-        root.as_object()["message"] = "Page not found";
+        json::object root;
+        root["code"] = "pageNotFound";
+        root["message"] = "Page not found";
         return root;
     };
 }
