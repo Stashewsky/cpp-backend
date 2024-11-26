@@ -30,14 +30,14 @@ namespace {
 }  // namespace
 
 int main(int argc, const char* argv[]) {
-    if (argc != 2) {
+    /*if (argc != 2) {
         std::cerr << "Usage: game_server <game-config-json>"sv << std::endl;
         return EXIT_FAILURE;
-    }
+    }*/
     try {
         // 1. Загружаем карту из файла и построить модель игры
-        model::Game game = json_loader::LoadGame(argv[1]);
-        //model::Game game = json_loader::LoadGame("/home/stanislav/cpp-backend/sprint1/problems/map_json/solution/data/config.json");
+        //model::Game game = json_loader::LoadGame(argv[1]);
+        model::Game game = json_loader::LoadGame("/home/stanislav/cpp-backend/sprint1/problems/map_json/solution/data/config.json");
         // 2. Инициализируем io_context
         const unsigned num_threads = std::thread::hardware_concurrency();
         net::io_context ioc(num_threads);
@@ -61,7 +61,7 @@ int main(int argc, const char* argv[]) {
         });
 
         // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
-        std::cout << "Hello! Server is starting at port " << port << std::endl;
+        std::cout << "Server has started..." << std::endl;
 
         // 6. Запускаем обработку асинхронных операций
         RunWorkers(std::max(1u, num_threads), [&ioc] {
