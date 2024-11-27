@@ -16,7 +16,7 @@ namespace responseBank{
     bool CheckMakeGetMapListResponse(
             const http::request<Body, http::basic_fields<Allocator>>& req,
             const model::Game& game){
-        return req.target() == "/api/v1/maps" or req.target() == "/api/v1/maps/";
+        return req.target() == "/api/v1/maps" || req.target() == "/api/v1/maps/";
     }
 
     template <typename Body, typename Allocator>
@@ -36,7 +36,7 @@ namespace responseBank{
             const http::request<Body, http::basic_fields<Allocator>>& req,
             const model::Game& game){
         auto url = SplitUrl(req.target());
-        return url.size()==4 &&
+        return url.size() == 4 &&
                url[0] == "api" &&
                url[1] == "v1" &&
                url[2] == "maps" &&
@@ -62,14 +62,14 @@ namespace responseBank{
             const http::request<Body, http::basic_fields<Allocator>>& req,
             const model::Game& game){
         auto url = SplitUrl(req.target());
-        return !url.empty() &&
-               url[0] == "api" &&
-               (
-                       url.size() > 4 ||
-                       url.size() < 3 ||
-                       (url.size() >= 2 && url[1] != "v1") ||
-                       (url.size() >= 3 && url[2] != "maps")
-               );
+
+        bool isInvalidSize = url.size() < 3 || url.size() > 4;
+        bool isInvalidVersion = url.size() >= 2 && url[1] != "v1";
+        bool isInvalidMap = url.size() >= 3 && url[2] != "maps";
+        
+        return !url.empty() && 
+               url[0] == "api" && 
+               (isInvalidSize || isInvalidVersion || isInvalidMap);
     };
 
     template <typename Body, typename Allocator>
