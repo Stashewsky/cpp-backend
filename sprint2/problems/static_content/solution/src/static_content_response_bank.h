@@ -100,14 +100,14 @@ namespace responseBank{
 
 
     template <typename Body, typename Allocator>
-    bool CheckGetStaticContent(
+    bool CheckGetStaticContentFile(
             const http::request<Body, http::basic_fields<Allocator>>& req,
             const fs::path& static_content_root) {
         return true;
     };
 
     template <typename Body, typename Allocator>
-    http::response<http::file_body> MakeResponseGetStaticContent(
+    http::response<http::file_body> MakeResponseGetStaticContentFile(
             const http::request<Body, http::basic_fields<Allocator>>& req,
             const fs::path& static_content_root) {
         http::response<http::file_body> res;

@@ -46,17 +46,17 @@ public:
             return;
         }
 
-        if(CheckStaticContentFileNotFound(req, static_content_root_)) {       // static content
+        if(responseBank::CheckStaticContentFileNotFound(req, static_content_root_)) {       // static content
             HandleFileNotFound(req, send);
             return;
         }
 
-        if(CheckLeaveStaticContentRootDir(req, static_content_root_)) {
+        if(responseBank::CheckLeaveStaticContentRootDir(req, static_content_root_)) {
             HandleLeaveStaticContentRootDir(req, send);
             return;
         }
 
-        if(CheckGetStaticContentFile(req, static_content_root_)) {
+        if(responseBank::CheckGetStaticContentFile(req, static_content_root_)) {
             HandleGetStaticContent(req, send);
         }
 
@@ -115,7 +115,7 @@ private:
     template <typename Body, typename Allocator, typename Send>
     void HandleGetStaticContent(const http::request<Body, http::basic_fields<Allocator>>& req, Send&& send){
         if(req.method() == http::verb::get || req.method() == http::verb::head){
-            send(responseBank::MakeResponseGetStaticContent(req, static_content_root_));
+            send(responseBank::MakeResponseGetStaticContentFile(req, static_content_root_));
         }else{
             send(responseBank::MakeResponseBadRequest(req, game_));
         }
