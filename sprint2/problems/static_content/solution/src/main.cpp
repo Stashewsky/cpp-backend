@@ -39,8 +39,9 @@ int main(int argc, const char* argv[]) {
     try {
         // 1. Загружаем карту из файла и построить модель игры
         model::Game game = json_loader::LoadGame(argv[1]);
-        //model::Game game = json_loader::LoadGame("/home/stanislav/cpp-backend/sprint1/problems/map_json/solution/data/config.json");
+        //model::Game game = json_loader::LoadGame("/home/stanislav/cpp-backend/sprint2/problems/static_content/solution/data/config.json");
         fs::path path_to_static_content{argv[2]};
+        //fs::path path_to_static_content{"/home/stanislav/cpp-backend/sprint2/problems/static_content/solution/static"};
 
         // 2. Инициализируем io_context
         const unsigned num_threads = std::thread::hardware_concurrency();

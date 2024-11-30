@@ -58,6 +58,7 @@ public:
 
         if(responseBank::CheckGetStaticContentFile(req, static_content_root_)) {
             HandleGetStaticContent(req, send);
+            return;
         }
 
         send(responseBank::MakeResponsePageNotFound(req, game_));
