@@ -7,6 +7,7 @@
 #include <string>
 #include <string_view>
 #include <optional>
+#include <shared_mutex>
 #include <mutex>
 #include <thread>
 
