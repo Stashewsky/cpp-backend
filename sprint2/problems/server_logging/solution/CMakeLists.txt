@@ -17,7 +17,7 @@ endif()
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-add_executable(hello_log
+add_executable(game_server
 	src/main.cpp
 	src/http_server.cpp
 	src/http_server.h
@@ -40,6 +40,6 @@ add_executable(hello_log
 		src/logging_data_bank.h
 		src/logging_data_bank.cpp
 )
-target_include_directories(hello_log PRIVATE CONAN_PKG::boost)
-target_link_libraries(hello_log PRIVATE Threads::Threads CONAN_PKG::boost)
+target_include_directories(game_server PRIVATE CONAN_PKG::boost)
+target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost)
 # используем "импортированную" цель CONAN_PKG::boost
