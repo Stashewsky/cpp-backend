@@ -38,31 +38,29 @@ endmacro()
 #################
 ###  BOOST
 #################
-set(CONAN_BOOST_ROOT "/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75")
-set(CONAN_INCLUDE_DIRS_BOOST "/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/include")
-set(CONAN_LIB_DIRS_BOOST "/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/lib")
+set(CONAN_BOOST_ROOT "/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a")
+set(CONAN_INCLUDE_DIRS_BOOST "/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/include")
+set(CONAN_LIB_DIRS_BOOST "/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/lib")
 set(CONAN_BIN_DIRS_BOOST )
 set(CONAN_RES_DIRS_BOOST )
 set(CONAN_SRC_DIRS_BOOST )
 set(CONAN_BUILD_DIRS_BOOST )
 set(CONAN_FRAMEWORK_DIRS_BOOST )
-set(CONAN_LIBS_BOOST boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization)
-set(CONAN_PKG_LIBS_BOOST boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization)
-set(CONAN_SYSTEM_LIBS_BOOST )
+set(CONAN_LIBS_BOOST boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_graph boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_math_c99 boost_math_c99f boost_math_c99l boost_math_tr1 boost_math_tr1f boost_math_tr1l boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization)
+set(CONAN_PKG_LIBS_BOOST boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_graph boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_math_c99 boost_math_c99f boost_math_c99l boost_math_tr1 boost_math_tr1f boost_math_tr1l boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization)
+set(CONAN_SYSTEM_LIBS_BOOST dl rt pthread)
 set(CONAN_FRAMEWORKS_BOOST )
 set(CONAN_FRAMEWORKS_FOUND_BOOST "")  # Will be filled later
 set(CONAN_DEFINES_BOOST "-DBOOST_STACKTRACE_ADDR2LINE_LOCATION=\"/usr/bin/addr2line\""
 			"-DBOOST_STACKTRACE_USE_ADDR2LINE"
 			"-DBOOST_STACKTRACE_USE_BACKTRACE"
-			"-DBOOST_STACKTRACE_USE_NOOP"
-			"-DBOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED")
+			"-DBOOST_STACKTRACE_USE_NOOP")
 set(CONAN_BUILD_MODULES_PATHS_BOOST )
 # COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
 set(CONAN_COMPILE_DEFINITIONS_BOOST "BOOST_STACKTRACE_ADDR2LINE_LOCATION=\"/usr/bin/addr2line\""
 			"BOOST_STACKTRACE_USE_ADDR2LINE"
 			"BOOST_STACKTRACE_USE_BACKTRACE"
-			"BOOST_STACKTRACE_USE_NOOP"
-			"BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED")
+			"BOOST_STACKTRACE_USE_NOOP")
 
 set(CONAN_C_FLAGS_BOOST "")
 set(CONAN_CXX_FLAGS_BOOST "")
@@ -84,13 +82,13 @@ set(CONAN_LIBS_BOOST ${CONAN_PKG_LIBS_BOOST} ${CONAN_SYSTEM_LIBS_BOOST} ${CONAN_
 #################
 ###  ZLIB
 #################
-set(CONAN_ZLIB_ROOT "/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3")
-set(CONAN_INCLUDE_DIRS_ZLIB "/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include")
-set(CONAN_LIB_DIRS_ZLIB "/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib")
+set(CONAN_ZLIB_ROOT "/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55")
+set(CONAN_INCLUDE_DIRS_ZLIB "/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include")
+set(CONAN_LIB_DIRS_ZLIB "/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib")
 set(CONAN_BIN_DIRS_ZLIB )
 set(CONAN_RES_DIRS_ZLIB )
 set(CONAN_SRC_DIRS_ZLIB )
-set(CONAN_BUILD_DIRS_ZLIB "/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/")
+set(CONAN_BUILD_DIRS_ZLIB "/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/")
 set(CONAN_FRAMEWORK_DIRS_ZLIB )
 set(CONAN_LIBS_ZLIB z)
 set(CONAN_PKG_LIBS_ZLIB z)
@@ -122,13 +120,13 @@ set(CONAN_LIBS_ZLIB ${CONAN_PKG_LIBS_ZLIB} ${CONAN_SYSTEM_LIBS_ZLIB} ${CONAN_FRA
 #################
 ###  BZIP2
 #################
-set(CONAN_BZIP2_ROOT "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a")
-set(CONAN_INCLUDE_DIRS_BZIP2 "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/include")
-set(CONAN_LIB_DIRS_BZIP2 "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/lib")
-set(CONAN_BIN_DIRS_BZIP2 "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/bin")
+set(CONAN_BZIP2_ROOT "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375")
+set(CONAN_INCLUDE_DIRS_BZIP2 "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/include")
+set(CONAN_LIB_DIRS_BZIP2 "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/lib")
+set(CONAN_BIN_DIRS_BZIP2 "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/bin")
 set(CONAN_RES_DIRS_BZIP2 )
 set(CONAN_SRC_DIRS_BZIP2 )
-set(CONAN_BUILD_DIRS_BZIP2 "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/")
+set(CONAN_BUILD_DIRS_BZIP2 "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/")
 set(CONAN_FRAMEWORK_DIRS_BZIP2 )
 set(CONAN_LIBS_BZIP2 bz2)
 set(CONAN_PKG_LIBS_BZIP2 bz2)
@@ -160,13 +158,13 @@ set(CONAN_LIBS_BZIP2 ${CONAN_PKG_LIBS_BZIP2} ${CONAN_SYSTEM_LIBS_BZIP2} ${CONAN_
 #################
 ###  LIBBACKTRACE
 #################
-set(CONAN_LIBBACKTRACE_ROOT "/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3")
-set(CONAN_INCLUDE_DIRS_LIBBACKTRACE "/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include")
-set(CONAN_LIB_DIRS_LIBBACKTRACE "/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib")
+set(CONAN_LIBBACKTRACE_ROOT "/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55")
+set(CONAN_INCLUDE_DIRS_LIBBACKTRACE "/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include")
+set(CONAN_LIB_DIRS_LIBBACKTRACE "/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib")
 set(CONAN_BIN_DIRS_LIBBACKTRACE )
 set(CONAN_RES_DIRS_LIBBACKTRACE )
 set(CONAN_SRC_DIRS_LIBBACKTRACE )
-set(CONAN_BUILD_DIRS_LIBBACKTRACE "/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/")
+set(CONAN_BUILD_DIRS_LIBBACKTRACE "/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/")
 set(CONAN_FRAMEWORK_DIRS_LIBBACKTRACE )
 set(CONAN_LIBS_LIBBACKTRACE backtrace)
 set(CONAN_PKG_LIBS_LIBBACKTRACE backtrace)
@@ -195,44 +193,6 @@ conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_LIBBACKTRACE "${CONAN_FRAMEWO
 set(CONAN_LIBS_LIBBACKTRACE ${CONAN_PKG_LIBS_LIBBACKTRACE} ${CONAN_SYSTEM_LIBS_LIBBACKTRACE} ${CONAN_FRAMEWORKS_FOUND_LIBBACKTRACE})
 
 
-#################
-###  LIBICONV
-#################
-set(CONAN_LIBICONV_ROOT "/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3")
-set(CONAN_INCLUDE_DIRS_LIBICONV "/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include")
-set(CONAN_LIB_DIRS_LIBICONV "/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib")
-set(CONAN_BIN_DIRS_LIBICONV "/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/bin")
-set(CONAN_RES_DIRS_LIBICONV )
-set(CONAN_SRC_DIRS_LIBICONV )
-set(CONAN_BUILD_DIRS_LIBICONV "/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/")
-set(CONAN_FRAMEWORK_DIRS_LIBICONV )
-set(CONAN_LIBS_LIBICONV iconv charset)
-set(CONAN_PKG_LIBS_LIBICONV iconv charset)
-set(CONAN_SYSTEM_LIBS_LIBICONV )
-set(CONAN_FRAMEWORKS_LIBICONV )
-set(CONAN_FRAMEWORKS_FOUND_LIBICONV "")  # Will be filled later
-set(CONAN_DEFINES_LIBICONV )
-set(CONAN_BUILD_MODULES_PATHS_LIBICONV )
-# COMPILE_DEFINITIONS are equal to CONAN_DEFINES without -D, for targets
-set(CONAN_COMPILE_DEFINITIONS_LIBICONV )
-
-set(CONAN_C_FLAGS_LIBICONV "")
-set(CONAN_CXX_FLAGS_LIBICONV "")
-set(CONAN_SHARED_LINKER_FLAGS_LIBICONV "")
-set(CONAN_EXE_LINKER_FLAGS_LIBICONV "")
-
-# For modern cmake targets we use the list variables (separated with ;)
-set(CONAN_C_FLAGS_LIBICONV_LIST "")
-set(CONAN_CXX_FLAGS_LIBICONV_LIST "")
-set(CONAN_SHARED_LINKER_FLAGS_LIBICONV_LIST "")
-set(CONAN_EXE_LINKER_FLAGS_LIBICONV_LIST "")
-
-# Apple Frameworks
-conan_find_apple_frameworks(CONAN_FRAMEWORKS_FOUND_LIBICONV "${CONAN_FRAMEWORKS_LIBICONV}" "_LIBICONV" "")
-# Append to aggregated values variable
-set(CONAN_LIBS_LIBICONV ${CONAN_PKG_LIBS_LIBICONV} ${CONAN_SYSTEM_LIBS_LIBICONV} ${CONAN_FRAMEWORKS_FOUND_LIBICONV})
-
-
 ### Definition of global aggregated variables ###
 
 set(CONAN_PACKAGE_NAME None)
@@ -240,14 +200,14 @@ set(CONAN_PACKAGE_VERSION None)
 
 set(CONAN_SETTINGS_ARCH "armv8")
 set(CONAN_SETTINGS_ARCH_BUILD "armv8")
-set(CONAN_SETTINGS_BUILD_TYPE "Release")
-set(CONAN_SETTINGS_COMPILER "apple-clang")
-set(CONAN_SETTINGS_COMPILER_LIBCXX "libc++")
-set(CONAN_SETTINGS_COMPILER_VERSION "15")
-set(CONAN_SETTINGS_OS "Macos")
-set(CONAN_SETTINGS_OS_BUILD "Macos")
+set(CONAN_SETTINGS_BUILD_TYPE "Debug")
+set(CONAN_SETTINGS_COMPILER "gcc")
+set(CONAN_SETTINGS_COMPILER_LIBCXX "libstdc++11")
+set(CONAN_SETTINGS_COMPILER_VERSION "11")
+set(CONAN_SETTINGS_OS "Linux")
+set(CONAN_SETTINGS_OS_BUILD "Linux")
 
-set(CONAN_DEPENDENCIES boost zlib bzip2 libbacktrace libiconv)
+set(CONAN_DEPENDENCIES boost zlib bzip2 libbacktrace)
 # Storing original command line args (CMake helper) flags
 set(CONAN_CMD_CXX_FLAGS ${CONAN_CXX_FLAGS})
 
@@ -255,35 +215,30 @@ set(CONAN_CMD_SHARED_LINKER_FLAGS ${CONAN_SHARED_LINKER_FLAGS})
 set(CONAN_CMD_C_FLAGS ${CONAN_C_FLAGS})
 # Defining accumulated conan variables for all deps
 
-set(CONAN_INCLUDE_DIRS "/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/include"
-			"/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include"
-			"/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/include"
-			"/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include"
-			"/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include" ${CONAN_INCLUDE_DIRS})
-set(CONAN_LIB_DIRS "/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/lib"
-			"/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib"
-			"/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/lib"
-			"/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib"
-			"/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib" ${CONAN_LIB_DIRS})
-set(CONAN_BIN_DIRS "/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/bin"
-			"/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/bin" ${CONAN_BIN_DIRS})
+set(CONAN_INCLUDE_DIRS "/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/include"
+			"/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include"
+			"/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/include"
+			"/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include" ${CONAN_INCLUDE_DIRS})
+set(CONAN_LIB_DIRS "/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/lib"
+			"/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib"
+			"/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/lib"
+			"/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib" ${CONAN_LIB_DIRS})
+set(CONAN_BIN_DIRS "/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/bin" ${CONAN_BIN_DIRS})
 set(CONAN_RES_DIRS  ${CONAN_RES_DIRS})
 set(CONAN_FRAMEWORK_DIRS  ${CONAN_FRAMEWORK_DIRS})
-set(CONAN_LIBS boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization z bz2 backtrace iconv charset ${CONAN_LIBS})
-set(CONAN_PKG_LIBS boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization z bz2 backtrace iconv charset ${CONAN_PKG_LIBS})
-set(CONAN_SYSTEM_LIBS  ${CONAN_SYSTEM_LIBS})
+set(CONAN_LIBS boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_graph boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_math_c99 boost_math_c99f boost_math_c99l boost_math_tr1 boost_math_tr1f boost_math_tr1l boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization z bz2 backtrace ${CONAN_LIBS})
+set(CONAN_PKG_LIBS boost_charconv boost_contract boost_coroutine boost_fiber_numa boost_fiber boost_context boost_graph boost_iostreams boost_json boost_locale boost_log_setup boost_log boost_math_c99 boost_math_c99f boost_math_c99l boost_math_tr1 boost_math_tr1f boost_math_tr1l boost_nowide boost_process boost_program_options boost_random boost_regex boost_stacktrace_addr2line boost_stacktrace_backtrace boost_stacktrace_basic boost_stacktrace_noop boost_timer boost_type_erasure boost_thread boost_chrono boost_container boost_date_time boost_unit_test_framework boost_prg_exec_monitor boost_test_exec_monitor boost_exception boost_url boost_wave boost_filesystem boost_atomic boost_wserialization boost_serialization z bz2 backtrace ${CONAN_PKG_LIBS})
+set(CONAN_SYSTEM_LIBS dl rt pthread ${CONAN_SYSTEM_LIBS})
 set(CONAN_FRAMEWORKS  ${CONAN_FRAMEWORKS})
 set(CONAN_FRAMEWORKS_FOUND "")  # Will be filled later
 set(CONAN_DEFINES "-DBOOST_STACKTRACE_ADDR2LINE_LOCATION=\"/usr/bin/addr2line\""
 			"-DBOOST_STACKTRACE_USE_ADDR2LINE"
 			"-DBOOST_STACKTRACE_USE_BACKTRACE"
-			"-DBOOST_STACKTRACE_USE_NOOP"
-			"-DBOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED" ${CONAN_DEFINES})
+			"-DBOOST_STACKTRACE_USE_NOOP" ${CONAN_DEFINES})
 set(CONAN_BUILD_MODULES_PATHS  ${CONAN_BUILD_MODULES_PATHS})
-set(CONAN_CMAKE_MODULE_PATH "/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/"
-			"/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/"
-			"/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/"
-			"/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/" ${CONAN_CMAKE_MODULE_PATH})
+set(CONAN_CMAKE_MODULE_PATH "/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/"
+			"/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/"
+			"/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/" ${CONAN_CMAKE_MODULE_PATH})
 
 set(CONAN_CXX_FLAGS " ${CONAN_CXX_FLAGS}")
 set(CONAN_SHARED_LINKER_FLAGS " ${CONAN_SHARED_LINKER_FLAGS}")
@@ -307,27 +262,27 @@ macro(conan_define_targets)
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${CONAN_CMD_SHARED_LINKER_FLAGS}")
 
 
-    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES "${CONAN_SYSTEM_LIBS_BOOST} ${CONAN_FRAMEWORKS_FOUND_BOOST} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv")
+    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES "${CONAN_SYSTEM_LIBS_BOOST} ${CONAN_FRAMEWORKS_FOUND_BOOST} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_BOOST_DEPENDENCIES "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES}")
     conan_package_library_targets("${CONAN_PKG_LIBS_BOOST}" "${CONAN_LIB_DIRS_BOOST}"
                                   CONAN_PACKAGE_TARGETS_BOOST "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES}"
                                   "" boost)
-    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_BOOST_DEBUG} ${CONAN_FRAMEWORKS_FOUND_BOOST_DEBUG} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv")
+    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_BOOST_DEBUG} ${CONAN_FRAMEWORKS_FOUND_BOOST_DEBUG} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_BOOST_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_DEBUG}")
     conan_package_library_targets("${CONAN_PKG_LIBS_BOOST_DEBUG}" "${CONAN_LIB_DIRS_BOOST_DEBUG}"
                                   CONAN_PACKAGE_TARGETS_BOOST_DEBUG "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_DEBUG}"
                                   "debug" boost)
-    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_BOOST_RELEASE} ${CONAN_FRAMEWORKS_FOUND_BOOST_RELEASE} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv")
+    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_BOOST_RELEASE} ${CONAN_FRAMEWORKS_FOUND_BOOST_RELEASE} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELEASE}")
     conan_package_library_targets("${CONAN_PKG_LIBS_BOOST_RELEASE}" "${CONAN_LIB_DIRS_BOOST_RELEASE}"
                                   CONAN_PACKAGE_TARGETS_BOOST_RELEASE "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELEASE}"
                                   "release" boost)
-    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_BOOST_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_BOOST_RELWITHDEBINFO} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv")
+    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_BOOST_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_BOOST_RELWITHDEBINFO} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELWITHDEBINFO}")
     conan_package_library_targets("${CONAN_PKG_LIBS_BOOST_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_BOOST_RELWITHDEBINFO}"
                                   CONAN_PACKAGE_TARGETS_BOOST_RELWITHDEBINFO "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_RELWITHDEBINFO}"
                                   "relwithdebinfo" boost)
-    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_BOOST_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_BOOST_MINSIZEREL} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv")
+    set(_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_BOOST_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_BOOST_MINSIZEREL} CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace")
     string(REPLACE " " ";" _CONAN_PKG_LIBS_BOOST_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_MINSIZEREL}")
     conan_package_library_targets("${CONAN_PKG_LIBS_BOOST_MINSIZEREL}" "${CONAN_LIB_DIRS_BOOST_MINSIZEREL}"
                                   CONAN_PACKAGE_TARGETS_BOOST_MINSIZEREL "${_CONAN_PKG_LIBS_BOOST_DEPENDENCIES_MINSIZEREL}"
@@ -586,77 +541,7 @@ macro(conan_define_targets)
                                                                   $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_LIBBACKTRACE_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_LIBBACKTRACE_MINSIZEREL_LIST}>
                                                                   $<$<CONFIG:Debug>:${CONAN_C_FLAGS_LIBBACKTRACE_DEBUG_LIST}  ${CONAN_CXX_FLAGS_LIBBACKTRACE_DEBUG_LIST}>)
 
-
-    set(_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES "${CONAN_SYSTEM_LIBS_LIBICONV} ${CONAN_FRAMEWORKS_FOUND_LIBICONV} ")
-    string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES}")
-    conan_package_library_targets("${CONAN_PKG_LIBS_LIBICONV}" "${CONAN_LIB_DIRS_LIBICONV}"
-                                  CONAN_PACKAGE_TARGETS_LIBICONV "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES}"
-                                  "" libiconv)
-    set(_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_DEBUG "${CONAN_SYSTEM_LIBS_LIBICONV_DEBUG} ${CONAN_FRAMEWORKS_FOUND_LIBICONV_DEBUG} ")
-    string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_DEBUG "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_DEBUG}")
-    conan_package_library_targets("${CONAN_PKG_LIBS_LIBICONV_DEBUG}" "${CONAN_LIB_DIRS_LIBICONV_DEBUG}"
-                                  CONAN_PACKAGE_TARGETS_LIBICONV_DEBUG "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_DEBUG}"
-                                  "debug" libiconv)
-    set(_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELEASE "${CONAN_SYSTEM_LIBS_LIBICONV_RELEASE} ${CONAN_FRAMEWORKS_FOUND_LIBICONV_RELEASE} ")
-    string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELEASE "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELEASE}")
-    conan_package_library_targets("${CONAN_PKG_LIBS_LIBICONV_RELEASE}" "${CONAN_LIB_DIRS_LIBICONV_RELEASE}"
-                                  CONAN_PACKAGE_TARGETS_LIBICONV_RELEASE "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELEASE}"
-                                  "release" libiconv)
-    set(_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELWITHDEBINFO "${CONAN_SYSTEM_LIBS_LIBICONV_RELWITHDEBINFO} ${CONAN_FRAMEWORKS_FOUND_LIBICONV_RELWITHDEBINFO} ")
-    string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELWITHDEBINFO "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELWITHDEBINFO}")
-    conan_package_library_targets("${CONAN_PKG_LIBS_LIBICONV_RELWITHDEBINFO}" "${CONAN_LIB_DIRS_LIBICONV_RELWITHDEBINFO}"
-                                  CONAN_PACKAGE_TARGETS_LIBICONV_RELWITHDEBINFO "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELWITHDEBINFO}"
-                                  "relwithdebinfo" libiconv)
-    set(_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_MINSIZEREL "${CONAN_SYSTEM_LIBS_LIBICONV_MINSIZEREL} ${CONAN_FRAMEWORKS_FOUND_LIBICONV_MINSIZEREL} ")
-    string(REPLACE " " ";" _CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_MINSIZEREL "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_MINSIZEREL}")
-    conan_package_library_targets("${CONAN_PKG_LIBS_LIBICONV_MINSIZEREL}" "${CONAN_LIB_DIRS_LIBICONV_MINSIZEREL}"
-                                  CONAN_PACKAGE_TARGETS_LIBICONV_MINSIZEREL "${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_MINSIZEREL}"
-                                  "minsizerel" libiconv)
-
-    add_library(CONAN_PKG::libiconv INTERFACE IMPORTED)
-
-    # Property INTERFACE_LINK_FLAGS do not work, necessary to add to INTERFACE_LINK_LIBRARIES
-    set_property(TARGET CONAN_PKG::libiconv PROPERTY INTERFACE_LINK_LIBRARIES ${CONAN_PACKAGE_TARGETS_LIBICONV} ${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES}
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LIBICONV_LIST}>
-
-                                                                 $<$<CONFIG:Release>:${CONAN_PACKAGE_TARGETS_LIBICONV_RELEASE} ${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELEASE}
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_RELEASE_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_RELEASE_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LIBICONV_RELEASE_LIST}>>
-
-                                                                 $<$<CONFIG:RelWithDebInfo>:${CONAN_PACKAGE_TARGETS_LIBICONV_RELWITHDEBINFO} ${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_RELWITHDEBINFO}
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_RELWITHDEBINFO_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_RELWITHDEBINFO_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LIBICONV_RELWITHDEBINFO_LIST}>>
-
-                                                                 $<$<CONFIG:MinSizeRel>:${CONAN_PACKAGE_TARGETS_LIBICONV_MINSIZEREL} ${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_MINSIZEREL}
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_MINSIZEREL_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_MINSIZEREL_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LIBICONV_MINSIZEREL_LIST}>>
-
-                                                                 $<$<CONFIG:Debug>:${CONAN_PACKAGE_TARGETS_LIBICONV_DEBUG} ${_CONAN_PKG_LIBS_LIBICONV_DEPENDENCIES_DEBUG}
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,SHARED_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_DEBUG_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,MODULE_LIBRARY>:${CONAN_SHARED_LINKER_FLAGS_LIBICONV_DEBUG_LIST}>
-                                                                 $<$<STREQUAL:$<TARGET_PROPERTY:TYPE>,EXECUTABLE>:${CONAN_EXE_LINKER_FLAGS_LIBICONV_DEBUG_LIST}>>)
-    set_property(TARGET CONAN_PKG::libiconv PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${CONAN_INCLUDE_DIRS_LIBICONV}
-                                                                      $<$<CONFIG:Release>:${CONAN_INCLUDE_DIRS_LIBICONV_RELEASE}>
-                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_INCLUDE_DIRS_LIBICONV_RELWITHDEBINFO}>
-                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_INCLUDE_DIRS_LIBICONV_MINSIZEREL}>
-                                                                      $<$<CONFIG:Debug>:${CONAN_INCLUDE_DIRS_LIBICONV_DEBUG}>)
-    set_property(TARGET CONAN_PKG::libiconv PROPERTY INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_LIBICONV}
-                                                                      $<$<CONFIG:Release>:${CONAN_COMPILE_DEFINITIONS_LIBICONV_RELEASE}>
-                                                                      $<$<CONFIG:RelWithDebInfo>:${CONAN_COMPILE_DEFINITIONS_LIBICONV_RELWITHDEBINFO}>
-                                                                      $<$<CONFIG:MinSizeRel>:${CONAN_COMPILE_DEFINITIONS_LIBICONV_MINSIZEREL}>
-                                                                      $<$<CONFIG:Debug>:${CONAN_COMPILE_DEFINITIONS_LIBICONV_DEBUG}>)
-    set_property(TARGET CONAN_PKG::libiconv PROPERTY INTERFACE_COMPILE_OPTIONS ${CONAN_C_FLAGS_LIBICONV_LIST} ${CONAN_CXX_FLAGS_LIBICONV_LIST}
-                                                                  $<$<CONFIG:Release>:${CONAN_C_FLAGS_LIBICONV_RELEASE_LIST} ${CONAN_CXX_FLAGS_LIBICONV_RELEASE_LIST}>
-                                                                  $<$<CONFIG:RelWithDebInfo>:${CONAN_C_FLAGS_LIBICONV_RELWITHDEBINFO_LIST} ${CONAN_CXX_FLAGS_LIBICONV_RELWITHDEBINFO_LIST}>
-                                                                  $<$<CONFIG:MinSizeRel>:${CONAN_C_FLAGS_LIBICONV_MINSIZEREL_LIST} ${CONAN_CXX_FLAGS_LIBICONV_MINSIZEREL_LIST}>
-                                                                  $<$<CONFIG:Debug>:${CONAN_C_FLAGS_LIBICONV_DEBUG_LIST}  ${CONAN_CXX_FLAGS_LIBICONV_DEBUG_LIST}>)
-
-    set(CONAN_TARGETS CONAN_PKG::boost CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace CONAN_PKG::libiconv)
+    set(CONAN_TARGETS CONAN_PKG::boost CONAN_PKG::zlib CONAN_PKG::bzip2 CONAN_PKG::libbacktrace)
 
 endmacro()
 

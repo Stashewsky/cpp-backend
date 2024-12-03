@@ -1,29 +1,25 @@
 [includedirs]
-/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/include
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/include
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
+/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/include
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/include
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include
 
 [libdirs]
-/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/lib
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/lib
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
+/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/lib
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/lib
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib
 
 [bindirs]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/bin
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/bin
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/bin
 
 [resdirs]
 
 
 [builddirs]
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/
 
 [libs]
 boost_charconv
@@ -32,11 +28,18 @@ boost_coroutine
 boost_fiber_numa
 boost_fiber
 boost_context
+boost_graph
 boost_iostreams
 boost_json
 boost_locale
 boost_log_setup
 boost_log
+boost_math_c99
+boost_math_c99f
+boost_math_c99l
+boost_math_tr1
+boost_math_tr1f
+boost_math_tr1l
 boost_nowide
 boost_process
 boost_program_options
@@ -65,18 +68,17 @@ boost_serialization
 z
 bz2
 backtrace
-iconv
-charset
 
 [system_libs]
-
+dl
+rt
+pthread
 
 [defines]
 BOOST_STACKTRACE_ADDR2LINE_LOCATION="/usr/bin/addr2line"
 BOOST_STACKTRACE_USE_ADDR2LINE
 BOOST_STACKTRACE_USE_BACKTRACE
 BOOST_STACKTRACE_USE_NOOP
-BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
 
 [cppflags]
 
@@ -104,10 +106,10 @@ BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
 
 
 [includedirs_boost]
-/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/include
+/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/include
 
 [libdirs_boost]
-/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75/lib
+/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a/lib
 
 [bindirs_boost]
 
@@ -125,11 +127,18 @@ boost_coroutine
 boost_fiber_numa
 boost_fiber
 boost_context
+boost_graph
 boost_iostreams
 boost_json
 boost_locale
 boost_log_setup
 boost_log
+boost_math_c99
+boost_math_c99f
+boost_math_c99l
+boost_math_tr1
+boost_math_tr1f
+boost_math_tr1l
 boost_nowide
 boost_process
 boost_program_options
@@ -157,14 +166,15 @@ boost_wserialization
 boost_serialization
 
 [system_libs_boost]
-
+dl
+rt
+pthread
 
 [defines_boost]
 BOOST_STACKTRACE_ADDR2LINE_LOCATION="/usr/bin/addr2line"
 BOOST_STACKTRACE_USE_ADDR2LINE
 BOOST_STACKTRACE_USE_BACKTRACE
 BOOST_STACKTRACE_USE_NOOP
-BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
 
 [cppflags_boost]
 
@@ -191,7 +201,7 @@ BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED
 
 
 [rootpath_boost]
-/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75
+/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a
 
 [name_boost]
 boost
@@ -209,10 +219,10 @@ cmake_find_package_multi=Boost
 
 
 [includedirs_zlib]
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include
 
 [libdirs_zlib]
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib
 
 [bindirs_zlib]
 
@@ -221,7 +231,7 @@ cmake_find_package_multi=Boost
 
 
 [builddirs_zlib]
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/
 
 [libs_zlib]
 z
@@ -257,7 +267,7 @@ z
 
 
 [rootpath_zlib]
-/Users/Stanislav/.conan/data/zlib/1.3.1/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3
+/home/stanislav/.conan/data/zlib/1.3.1/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55
 
 [name_zlib]
 zlib
@@ -274,19 +284,19 @@ cmake_find_package_multi=ZLIB
 
 
 [includedirs_bzip2]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/include
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/include
 
 [libdirs_bzip2]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/lib
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/lib
 
 [bindirs_bzip2]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/bin
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/bin
 
 [resdirs_bzip2]
 
 
 [builddirs_bzip2]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/
 
 [libs_bzip2]
 bz2
@@ -322,7 +332,7 @@ bz2
 
 
 [rootpath_bzip2]
-/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a
+/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375
 
 [name_bzip2]
 bzip2
@@ -339,10 +349,10 @@ cmake_find_package_multi=BZip2
 
 
 [includedirs_libbacktrace]
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/include
 
 [libdirs_libbacktrace]
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/lib
 
 [bindirs_libbacktrace]
 
@@ -351,7 +361,7 @@ cmake_find_package_multi=BZip2
 
 
 [builddirs_libbacktrace]
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55/
 
 [libs_libbacktrace]
 backtrace
@@ -387,7 +397,7 @@ backtrace
 
 
 [rootpath_libbacktrace]
-/Users/Stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3
+/home/stanislav/.conan/data/libbacktrace/cci.20210118/_/_/package/bef5299822e42e96f0e878760beb2bf99ad4cd55
 
 [name_libbacktrace]
 libbacktrace
@@ -402,83 +412,14 @@ cci.20210118
 
 
 
-[includedirs_libiconv]
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/include
-
-[libdirs_libiconv]
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/lib
-
-[bindirs_libiconv]
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/bin
-
-[resdirs_libiconv]
-
-
-[builddirs_libiconv]
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/
-
-[libs_libiconv]
-iconv
-charset
-
-[system_libs_libiconv]
-
-
-[defines_libiconv]
-
-
-[cppflags_libiconv]
-
-
-[cxxflags_libiconv]
-
-
-[cflags_libiconv]
-
-
-[sharedlinkflags_libiconv]
-
-
-[exelinkflags_libiconv]
-
-
-[sysroot_libiconv]
-
-
-[frameworks_libiconv]
-
-
-[frameworkdirs_libiconv]
-
-
-[rootpath_libiconv]
-/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3
-
-[name_libiconv]
-libiconv
-
-[version_libiconv]
-1.17
-
-[generatornames_libiconv]
-cmake_find_package=Iconv
-cmake_find_package_multi=Iconv
-
-[generatorfilenames_libiconv]
-
-
-
 [USER_boost]
 stacktrace_addr2line_available=True
 [USER_bzip2]
 [USER_libbacktrace]
-[USER_libiconv]
 [USER_zlib]
 [ENV_boost]
-BOOST_ROOT=/Users/Stanislav/.conan/data/boost/1.86.0/_/_/package/265358e4ff79ba2c3ebe291cab461b5c71ce3b75
+BOOST_ROOT=/home/stanislav/.conan/data/boost/1.86.0/_/_/package/f6c0d7de5bccc7fca06c9c77957c6fa05497347a
 [ENV_zlib]
 [ENV_bzip2]
-PATH=["/Users/Stanislav/.conan/data/bzip2/1.0.8/_/_/package/e678d526ab22540179f155f996fc23a941dfe05a/bin"]
+PATH=["/home/stanislav/.conan/data/bzip2/1.0.8/_/_/package/f29869d2b5de8296a9ab27456924c4485e0d8375/bin"]
 [ENV_libbacktrace]
-[ENV_libiconv]
-PATH=["/Users/Stanislav/.conan/data/libiconv/1.17/_/_/package/6f12be38b2e454b75ce1f2efb692e5b77c8cdee3/bin"]

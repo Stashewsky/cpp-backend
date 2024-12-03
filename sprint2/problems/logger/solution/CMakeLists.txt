@@ -7,7 +7,7 @@ set(CONAN_DISABLE_CHECK_COMPILER ON)
 
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()
+conan_basic_setup(TARGETS)
 
 find_package(Boost 1.78.0 REQUIRED)
 if(Boost_FOUND)
@@ -36,4 +36,6 @@ add_executable(game_server
 		src/response_bank.cpp
 		src/static_content_response_bank.cpp
 )
-target_link_libraries(game_server PRIVATE Threads::Threads)
+target_include_directories(game_server PRIVATE CONAN_PKG::boost)
+target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost)
+# используем "импортированную" цель CONAN_PKG::boost

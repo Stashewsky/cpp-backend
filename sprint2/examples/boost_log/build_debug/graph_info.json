@@ -58,7 +58,7 @@
   ],
   [
    "boost:i18n_backend_iconv",
-   "libiconv"
+   "libc"
   ],
   [
    "boost:i18n_backend_icu",
@@ -178,7 +178,7 @@
   ],
   [
    "boost:without_graph",
-   "True"
+   "False"
   ],
   [
    "boost:without_graph_parallel",
@@ -202,7 +202,7 @@
   ],
   [
    "boost:without_math",
-   "True"
+   "False"
   ],
   [
    "boost:without_mpi",
@@ -294,14 +294,6 @@
   ],
   [
    "libbacktrace:shared",
-   "False"
-  ],
-  [
-   "libiconv:fPIC",
-   "True"
-  ],
-  [
-   "libiconv:shared",
    "False"
   ],
   [
