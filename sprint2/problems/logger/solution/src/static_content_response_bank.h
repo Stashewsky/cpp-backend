@@ -6,6 +6,8 @@
 #include <iostream>
 #include <filesystem>
 
+#include "logger.h"
+
 namespace beast = boost::beast;
 namespace http = beast::http;
 namespace sys = boost::system;
@@ -132,7 +134,10 @@ namespace responseBank{
         http::file_body::value_type file;
 
         if (sys::error_code ec; file.open(static_content.c_str(), beast::file_mode::read, ec), ec) {
-            std::cout << "Failed to open static content file "sv << std::endl;
+            BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error"sv,
+                                                                  logware::ExceptionLogData(0,
+                                                                                            "Failed to open static content file "sv,
+                                                                                            ec.what()));
         } else {
             res.body() = std::move(file);
         }

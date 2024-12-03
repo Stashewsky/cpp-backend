@@ -1,9 +1,12 @@
 #include "json_loader.h"
+#include "logger.h"
 #include <fstream>
 #include <iostream>
 #include <boost/json.hpp>
 
 namespace json_loader {
+    using namespace std::literals;
+    namespace json = boost::json;
 
     namespace coord_constants{
         const std::string X_KEY = "x";
@@ -20,11 +23,13 @@ namespace json_loader {
         const std::string H_KEY = "h";
     }
 
-    namespace json = boost::json;
-
     std::string ReadJsonFile(const std::filesystem::path& json_path){
         std::ifstream file(json_path);
         if(!file.is_open()){
+            BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error"sv,
+                                                                  logware::ExceptionLogData(EXIT_FAILURE,
+                                                                                            "Error: Can't open file. Check this path: "sv,
+                                                                                            json_path.string()));
             throw std::runtime_error("Error! Can not open json file!");
         }
         std::string line;

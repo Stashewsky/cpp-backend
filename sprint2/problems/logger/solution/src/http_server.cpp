@@ -8,7 +8,10 @@ namespace http_server {
 using namespace std::literals;
 
 void ReportError(beast::error_code ec, std::string_view where){
-    std::cout << where << " : " << ec.what() << std::endl;
+    BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error"sv,
+                                                          logware::ExceptionLogData(0,
+                                                                                    ec.message(),
+                                                                                    ec.what()));
 }
 
 void SessionBase::Run() {
@@ -16,6 +19,30 @@ void SessionBase::Run() {
     // Таким образом вся работа со stream_ будет выполняться, используя его executor
     net::dispatch(stream_.get_executor(),
                   beast::bind_front_handler(&SessionBase::Read, GetSharedThis()));
+}
+
+const std::string& SessionBase::GetRemoteIp(){
+    static std::string remote_ip;
+    try {
+        auto temp =  stream_
+                .socket()
+                .remote_endpoint()
+                .address()
+                .to_string();
+
+        remote_ip = temp;
+        } catch(...) {}
+
+        return remote_ip;
+    };
+
+void SessionBase::SetReceivedRequestTime(const boost::posix_time::ptime& received_request_moment){
+    received_request_moment_ = received_request_moment;
+}
+
+long SessionBase::GetDurationFromTimeReceivedRequest_ms(const boost::posix_time::ptime& to_moment){
+    boost::posix_time::time_duration duration = to_moment - received_request_moment_;
+    return duration.total_milliseconds();
 }
 
 void SessionBase::Read() { 

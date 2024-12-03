@@ -1,6 +1,7 @@
 #pragma once
 #include "sdk.h"
-// boost.beast будет использовать std::string_view вместо boost::string_view
+#include "logger.h"
+//boost.beast будет использовать std::string_view вместо boost::string_view
 #define BOOST_BEAST_USE_STD_STRING_VIEW
 
 #include <boost/asio/ip/tcp.hpp>
@@ -15,7 +16,7 @@ using tcp = net::ip::tcp;
 namespace beast = boost::beast;
 namespace http = beast::http;
 namespace sys = boost::system;
-
+using namespace std::literals;
 void ReportError(beast::error_code ec, std::string_view what);
 
 class SessionBase {
@@ -24,6 +25,7 @@ public:
     SessionBase(const SessionBase&) = delete;
     SessionBase& operator=(const SessionBase&) = delete;
     void Run();
+    const std::string& GetRemoteIp();
 protected:
     explicit SessionBase(tcp::socket&& socket)
         : stream_(std::move(socket)) {
@@ -41,14 +43,22 @@ protected:
         http::async_write(stream_, *safe_response,
                           [safe_response, self](beast::error_code ec, std::size_t bytes_written) {
                               self->OnWrite(safe_response->need_eof(), ec, bytes_written);
+                              BOOST_LOG_TRIVIAL(info) << logware::CreateLogMessage("response sent"sv,
+                                                                                   logware::ResponseLogData<Body, Fields>(self->GetRemoteIp(),
+                                                                                                                          self->GetDurationFromTimeReceivedRequest_ms(boost::posix_time::microsec_clock::local_time()),
+                                                                                                                          *safe_response));
                           });
     }
+
+    void SetReceivedRequestTime(const boost::posix_time::ptime& received_request_moment);
+    long GetDurationFromTimeReceivedRequest_ms(const boost::posix_time::ptime& to_moment);
 
 private:
     // tcp_stream содержит внутри себя сокет и добавляет поддержку таймаутов
     beast::tcp_stream stream_;
     beast::flat_buffer buffer_;
     HttpRequest request_;
+    boost::posix_time::ptime received_request_moment_;
 
     void Read();
 
@@ -81,6 +91,9 @@ private:
     };
 
     void HandleRequest(HttpRequest&& request) override {
+        SetReceivedRequestTime(boost::posix_time::microsec_clock::local_time());
+        BOOST_LOG_TRIVIAL(info) << logware::CreateLogMessage("request received"sv,
+                                                             logware::RequestLogData(GetRemoteIp(), request));
         // Захватываем умный указатель на текущий объект Session в лямбде,
         // чтобы продлить время жизни сессии до вызова лямбды.
         // Используется generic-лямбда функция, способная принять response произвольного типа

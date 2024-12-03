@@ -35,6 +35,10 @@ add_executable(game_server
         src/api_response_bank.h
 		src/response_bank.cpp
 		src/static_content_response_bank.cpp
+		src/logger.h
+		src/logger.cpp
+		src/logging_data_bank.h
+		src/logging_data_bank.cpp
 )
 target_include_directories(game_server PRIVATE CONAN_PKG::boost)
 target_link_libraries(game_server PRIVATE Threads::Threads CONAN_PKG::boost)

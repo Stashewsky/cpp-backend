@@ -11,6 +11,7 @@
 
 #include "json_loader.h"
 #include "request_handler.h"
+#include "logger.h"
 
 using namespace std::literals;
 namespace net = boost::asio;
@@ -35,10 +36,14 @@ namespace {
 }  // namespace
 
 int main(int argc, const char* argv[]) {
+    logware::InitLogger();
+
     if (argc != 3) {
-        std::cerr << "Usage: game_server <game-config-json>"sv << std::endl;
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("Usage: game_server <game-config-json>"sv,
+                                                              logware::ExitCodeLogData(EXIT_FAILURE));
         return EXIT_FAILURE;
     }
+
     try {
         // 1. Загружаем карту из файла и построить модель игры
         model::Game game = json_loader::LoadGame(argv[1]);
@@ -54,7 +59,8 @@ int main(int argc, const char* argv[]) {
         net::signal_set signals(ioc, SIGINT, SIGTERM);
         signals.async_wait([&ioc](const sys::error_code& ec, [[maybe_unused]] int signal_number) {
             if (!ec) {
-                std::cout << "Signal "sv << signal_number << " received"sv << std::endl;
+                BOOST_LOG_TRIVIAL(info) << logware::CreateLogMessage("server exited"sv,
+                                                                     logware::ExitCodeLogData(0));
                 ioc.stop();
             }
         });
@@ -69,14 +75,15 @@ int main(int argc, const char* argv[]) {
         });
 
         // Эта надпись сообщает тестам о том, что сервер запущен и готов обрабатывать запросы
-        std::cout << "Server has started..."sv << std::endl;
-
+        BOOST_LOG_TRIVIAL(info) << logware::CreateLogMessage("Server has started..."sv,
+                                                             logware::ServerAddressLogData(address.to_string(), port));
         // 6. Запускаем обработку асинхронных операций
         RunWorkers(std::max(1u, num_threads), [&ioc] {
             ioc.run();
         });
     } catch (const std::exception& ex) {
-        std::cerr << ex.what() << std::endl;
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("error"sv,
+                                                              logware::ExceptionLogData(EXIT_FAILURE, "Server down"sv, ex.what()));
         return EXIT_FAILURE;
     }
 }
