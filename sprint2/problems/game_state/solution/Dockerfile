@@ -1,4 +1,4 @@
-FROM gcc:11.3 as build
+FROM gcc:11.3 AS build
 
 # Выполнить установку зависимостей внутри контейнера.
 RUN apt update && \
@@ -25,7 +25,7 @@ RUN cd /app/build && \
     
     
 # Второй контейнер в том же докерфайле
-FROM ubuntu:22.04 as run
+FROM ubuntu:22.04 AS run
 
 # Создадим пользователя www
 RUN groupadd -r www && useradd -r -g www www
