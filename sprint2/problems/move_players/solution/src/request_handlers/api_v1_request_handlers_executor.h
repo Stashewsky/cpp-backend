@@ -55,9 +55,6 @@ namespace rh_storage{
                                                                {{http::verb::get, GetMapByIdHandler}},
                                                                BadRequestHandler,
                                                                {MapNotFoundHandler}),
-                RequestHandlerNode<ActivatorType, HandlerType>(InvalidContentTypeActivator,
-                                                               {{http::verb::post, InvalidContentTypeHandler}},
-                                                               InvalidContentTypeHandler),
                 RequestHandlerNode<ActivatorType, HandlerType>(JoinToGameInvalidJsonReqActivator,
                                                                {{http::verb::post, JoinToGameInvalidJsonReqHandler}},
                                                                OnlyPostMethodAllowedHandler),
@@ -80,13 +77,6 @@ namespace rh_storage{
                 RequestHandlerNode<ActivatorType, HandlerType>(GetGameStateActivator,
                                                                {{http::verb::get, GetGameStateHandler},
                                                                 {http::verb::head, GetGameStateHandler}},
-                                                               InvalidMethodHandler,
-                                                               {UnknownTokenHandler}),
-                RequestHandlerNode<ActivatorType, HandlerType>(PlayerActionInvalidActionActivator,
-                                                               {{http::verb::post, PlayerActionInvalidActionHandler}},
-                                                               OnlyPostMethodAllowedHandler),
-                RequestHandlerNode<ActivatorType, HandlerType>(PlayerActionActivator,
-                                                               {{http::verb::post, PlayerActionHandler}},
                                                                InvalidMethodHandler,
                                                                {UnknownTokenHandler})
         };

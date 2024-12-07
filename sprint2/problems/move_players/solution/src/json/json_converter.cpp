@@ -72,34 +72,15 @@ namespace json_converter{
         return json::serialize(msg);
     };
 
-    std::string CreateEmptyAuthorizationResponse() {
-        //json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
-        //                    {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}}; // todo: different messages
+    std::string CreateGetPlayersListEmptyAuthorizationResponse() {
         json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
-                           {json_keys::RESPONSE_MESSAGE, "Authorization header is required"}};
+                           {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}};
         return json::serialize(msg);
     };
 
-    std::string CreateUnknownTokenResponse() {
+    std::string CreateGetPlayersListUnknownTokenResponse() {
         json::value msg = {{json_keys::RESPONSE_CODE, "unknownToken"},
                            {json_keys::RESPONSE_MESSAGE, "Player token has not been found"}};
-        return json::serialize(msg);
-    };
-
-    std::string CreatePlayerActionResponse() {
-        json::value msg = {{}};
-        return json::serialize(msg);
-    };
-
-    std::string CreatePlayerActionInvalidActionResponse() {
-        json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
-                           {json_keys::RESPONSE_MESSAGE, "Failed to parse action"}};
-        return json::serialize(msg);
-    };
-
-    std::string CreateInvalidContentTypeResponse() {
-        json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
-                           {json_keys::RESPONSE_MESSAGE, "Invalid content type"}};
         return json::serialize(msg);
     };
 
@@ -147,16 +128,6 @@ namespace json_converter{
             std::string player_name = json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_PLAYER_NAME));
             model::Map::Id map_id{json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_MAP_ID))};
             return std::tie(player_name, map_id);
-        } catch(...) {
-            return std::nullopt;
-        }
-    };
-
-    std::optional<std::string> ParsePlayerActionRequest(const std::string& msg) {
-        try {
-            json::value jv = json::parse(msg);
-            std::string direction = json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_PLAYER_MOVE));
-            return direction;
         } catch(...) {
             return std::nullopt;
         }

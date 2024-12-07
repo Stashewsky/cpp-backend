@@ -17,7 +17,6 @@ namespace rh_storage{
     const size_t SIZE_OF_TWO_SEGMENT_URL = 2;
     const size_t SIZE_OF_THREE_SEGMENT_URL = 3;
     const size_t SIZE_OF_FOUR_SEGMENT_URL = 4;
-    const size_t SIZE_OF_FIVE_SEGMENT_URL = 5;
 
     template <typename Request>
     bool BadRequestActivator(const Request& req) {
@@ -25,7 +24,7 @@ namespace rh_storage{
         return !url.empty() &&
                url[0] == "api" &&
                (
-                       url.size() > SIZE_OF_FIVE_SEGMENT_URL ||
+                       url.size() > SIZE_OF_FOUR_SEGMENT_URL ||
                        url.size() < SIZE_OF_THREE_SEGMENT_URL ||
                        (url.size() >= SIZE_OF_TWO_SEGMENT_URL &&
                         url[1] != "v1") ||
@@ -34,9 +33,7 @@ namespace rh_storage{
                         url[2] != "game" &&
                         url[3] != "join" &&
                         url[3] != "players" &&
-                        url[3] != "state" &&
-                        url[3] != "player" &&
-                        (url.size() == SIZE_OF_FIVE_SEGMENT_URL && url[4] != "action"))
+                        url[3] != "state")
                );
     };
 
@@ -231,9 +228,7 @@ namespace rh_storage{
         return ((req.target() == "/api/v1/game/players" ||
                  req.target() == "/api/v1/game/players/") ||
                 (req.target() == "/api/v1/game/state" ||
-                 req.target() == "/api/v1/game/state/") ||
-                (req.target() == "/api/v1/game/player/action" ||
-                 req.target() == "/api/v1/game/player/action/")) && // todo: need rework
+                 req.target() == "/api/v1/game/state/")) && // todo: need rework
                (req[http::field::authorization].empty() ||
                 GetTokenString(req[http::field::authorization]).empty());
     }
@@ -246,7 +241,7 @@ namespace rh_storage{
         StringResponse response(http::status::unauthorized, req.version());
         response.set(http::field::content_type, "application/json");
         response.set(http::field::cache_control, "no-cache");
-        response.body() = json_converter::CreateEmptyAuthorizationResponse();
+        response.body() = json_converter::CreateGetPlayersListEmptyAuthorizationResponse();
         response.content_length(response.body().size());
         response.keep_alive(req.keep_alive());
         send(response);
@@ -322,83 +317,6 @@ namespace rh_storage{
     }
 
 
-    template <typename Request>
-    bool InvalidContentTypeActivator(const Request& req) {
-        return ((req.target() == "/api/v1/game/join" ||
-                 req.target() == "/api/v1/game/join/") ||
-                (req.target() == "/api/v1/game/player/action" ||
-                 req.target() == "/api/v1/game/player/action/")) && // todo: need rework
-               (req[http::field::content_type].empty() ||
-                req[http::field::content_type] != "application/json");
-    }
-
-    template <typename Request, typename Send>
-    std::optional<size_t> InvalidContentTypeHandler(
-            const Request& req,
-            app::Application& application,
-            Send& send) {
-        StringResponse response(http::status::bad_request, req.version());
-        response.set(http::field::content_type, "application/json");
-        response.set(http::field::cache_control, "no-cache");
-        response.body() = json_converter::CreateInvalidContentTypeResponse();
-        response.content_length(response.body().size());
-        response.keep_alive(req.keep_alive());
-        send(response);
-        return std::nullopt;
-    }
-
-    template <typename Request>
-    bool PlayerActionInvalidActionActivator(const Request& req) {
-        if((req.target() == "/api/v1/game/player/action" || req.target() == "/api/v1/game/player/action/")) {
-            auto res = json_converter::ParsePlayerActionRequest(req.body());
-            if(res.has_value()) {
-                return !model::STRING_TO_DIRECTION.contains(res.value());
-            }
-        }
-        return false;
-    }
-
-    template <typename Request, typename Send>
-    std::optional<size_t> PlayerActionInvalidActionHandler(
-            const Request& req,
-            app::Application& application,
-            Send& send) {
-        StringResponse response(http::status::bad_request, req.version());
-        response.set(http::field::content_type, "application/json");
-        response.set(http::field::cache_control, "no-cache");
-        response.body() = json_converter::CreatePlayerActionInvalidActionResponse();
-        response.content_length(response.body().size());
-        response.keep_alive(req.keep_alive());
-        send(response);
-        return std::nullopt;
-    }
-
-    template <typename Request>
-    bool PlayerActionActivator(const Request& req) {
-        return (req.target() == "/api/v1/game/player/action" || req.target() == "/api/v1/game/player/action");
-    }
-
-    template <typename Request, typename Send>
-    std::optional<size_t> PlayerActionHandler(
-            const Request& req,
-            app::Application& application,
-            Send& send) {
-        authentication::Token token{GetTokenString(req[http::field::authorization])};
-        if(!application.IsExistPlayer(token)) {
-            return 0;
-        }
-        std::string directionStr = json_converter::ParsePlayerActionRequest(req.body()).value();
-        application.MovePlayer(token, model::STRING_TO_DIRECTION.at(directionStr));
-        StringResponse response(http::status::ok, req.version());
-        response.set(http::field::content_type, "application/json");
-        response.set(http::field::cache_control, "no-cache");
-        response.body() = json_converter::CreatePlayerActionResponse();
-        response.content_length(response.body().size());
-        response.keep_alive(req.keep_alive());
-        send(response);
-        return std::nullopt;
-    }
-
 
     template <typename Request, typename Send>
     std::optional<size_t> UnknownTokenHandler(
@@ -408,7 +326,7 @@ namespace rh_storage{
         StringResponse response(http::status::unauthorized, req.version());
         response.set(http::field::content_type, "application/json");
         response.set(http::field::cache_control, "no-cache");
-        response.body() = json_converter::CreateUnknownTokenResponse();
+        response.body() = json_converter::CreateGetPlayersListUnknownTokenResponse();
         response.content_length(response.body().size());
         response.keep_alive(req.keep_alive());
         send(response);
