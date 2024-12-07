@@ -10,28 +10,28 @@ const std::string& Dog::GetName() const {
     return name_;
 };
 
-void Dog::SetDirection(Direction direction){
+void Dog::SetDirection(Direction direction) {
     direction_ = std::move(direction);
-}
+};
 
-const Direction Dog::GetDirection() const{
+const Direction Dog::GetDirection() const {
     return direction_;
-}
+};
 
-void Dog::SetPosition(Position position){
+void Dog::SetPosition(Position position) {
     position_ = std::move(position);
-}
+};
 
-const Position& Dog::GetPosition() const{
+const Position& Dog::GetPosition() const {
     return position_;
-}
+};
 
-void Dog::SetVelocity(Velocity velocity){
-    velocity_ = std::move(velocity);
-}
+void Dog::SetVelocity(Velocity velocity) {
+    velocity_ = velocity;
+};
 
-const Velocity& Dog::GetVelocity() const{
+const Velocity& Dog::GetVelocity() const {
     return velocity_;
-}
+};
 
 }

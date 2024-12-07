@@ -16,12 +16,11 @@ std::string CreateOnlyPostMethodAllowedResponse();
 std::string CreateJoinToGameInvalidArgumentResponse();
 std::string CreateJoinToGameMapNotFoundResponse();
 std::string CreateJoinToGameEmptyPlayerNameResponse();
-std::string CreatePlayersListOnMapResponse(const std::vector< std::weak_ptr<model::Player> >& players);
 std::string CreateInvalidMethodResponse();
 std::string CreateGetPlayersListEmptyAuthorizationResponse();
 std::string CreateGetPlayersListUnknownTokenResponse();
+std::string CreatePlayersListOnMapResponse(const std::vector< std::weak_ptr<model::Player> >& players);
 std::string CreateGameStateResponse(const std::vector< std::weak_ptr<model::Player> >& players);
-
 
 std::string CreateJoinToGameResponse(const std::string& token, size_t player_id);
 std::optional< std::tuple<std::string, model::Map::Id> > ParseJoinToGameRequest(const std::string& msg);

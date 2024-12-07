@@ -18,12 +18,12 @@ void Player::SetGameSession(std::weak_ptr<GameSession> session) {
     session_ = session;
 };
 
+std::weak_ptr<Dog> Player::GetDog() {
+    return dog_;
+};
+
 void Player::SetDog(std::weak_ptr<Dog> dog) {
     dog_ = dog;
 };
-
-std::weak_ptr<Dog> Player::GetDog(){
-    return dog_;
-}
 
 }

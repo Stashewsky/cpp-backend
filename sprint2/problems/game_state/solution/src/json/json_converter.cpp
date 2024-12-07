@@ -42,13 +42,13 @@ std::string CreatePageNotFoundResponse() {
     return json::serialize(msg);
 };
 
-std::string CreateOnlyPostMethodAllowedResponse(){
+std::string CreateOnlyPostMethodAllowedResponse() {
     json::value msg = {{json_keys::RESPONSE_CODE, "invalidMethod"},
                         {json_keys::RESPONSE_MESSAGE, "Only POST method is expected"}};
     return json::serialize(msg);
 };
 
-std::string CreateJoinToGameInvalidArgumentResponse(){
+std::string CreateJoinToGameInvalidArgumentResponse() {
     json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
                         {json_keys::RESPONSE_MESSAGE, "Join game request parse error"}};
     return json::serialize(msg);
@@ -60,13 +60,31 @@ std::string CreateJoinToGameMapNotFoundResponse() {
     return json::serialize(msg);
 };
 
-std::string CreateJoinToGameEmptyPlayerNameResponse(){
+std::string CreateJoinToGameEmptyPlayerNameResponse() {
     json::value msg = {{json_keys::RESPONSE_CODE, "invalidArgument"},
                         {json_keys::RESPONSE_MESSAGE, "Invalid name"}};
     return json::serialize(msg);
 };
 
-std::string CreatePlayersListOnMapResponse(const std::vector< std::weak_ptr<model::Player> >& players){
+std::string CreateInvalidMethodResponse() {
+    json::value msg = {{json_keys::RESPONSE_CODE, "invalidMethod"},
+                        {json_keys::RESPONSE_MESSAGE, "Invalid method"}};
+    return json::serialize(msg);
+};
+
+std::string CreateGetPlayersListEmptyAuthorizationResponse() {
+    json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
+                        {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}};
+    return json::serialize(msg);
+};
+
+std::string CreateGetPlayersListUnknownTokenResponse() {
+    json::value msg = {{json_keys::RESPONSE_CODE, "unknownToken"},
+                        {json_keys::RESPONSE_MESSAGE, "Player token has not been found"}};
+    return json::serialize(msg);
+};
+
+std::string CreatePlayersListOnMapResponse(const std::vector< std::weak_ptr<model::Player> >& players) {
     json::value jv;
     json::object& obj = jv.emplace_object();  
     for(auto item : players) {
@@ -79,22 +97,23 @@ std::string CreatePlayersListOnMapResponse(const std::vector< std::weak_ptr<mode
     return json::serialize(jv);
 };
 
-std::string CreateInvalidMethodResponse() {
-    json::value msg = {{json_keys::RESPONSE_CODE, "invalidMethod"},
-                        {json_keys::RESPONSE_MESSAGE, "Invalid method"}};
-    return json::serialize(msg);
-};
-
-std::string CreateGetPlayersListEmptyAuthorizationResponse(){
-    json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
-                        {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}};
-    return json::serialize(msg);
-};
-
-std::string CreateGetPlayersListUnknownTokenResponse() {
-    json::value msg = {{json_keys::RESPONSE_CODE, "unknownToken"},
-                        {json_keys::RESPONSE_MESSAGE, "Player token has not been found"}};
-    return json::serialize(msg);
+std::string CreateGameStateResponse(const std::vector< std::weak_ptr<model::Player> >& players) {
+    json::value jv;
+    json::object obj;  
+    for(auto item : players) {
+        auto player = item.lock();
+        auto dog = player->GetDog().lock();
+        std::stringstream ss;
+        ss << *(player->GetId());
+        json::array pos = {dog->GetPosition().x, dog->GetPosition().y};
+        json::array speed = {dog->GetVelocity().vx, dog->GetVelocity().vy};
+        json::value jv_item = {{json_keys::RESPONSE_DOG_POSITION, pos},
+                                {json_keys::RESPONSE_DOG_VELOCITY, speed},
+                                {json_keys::RESPONSE_DOG_DIRECTION, model::DIRECTION_TO_STRING.at(dog->GetDirection())}};
+        obj[ss.str()] = jv_item;
+    }
+    jv.emplace_object()[json_keys::RESPONSE_PLAYERS] = obj;  
+    return json::serialize(jv);
 };
 
 std::string CreateJoinToGameResponse(const std::string& token, size_t player_id) {
@@ -112,27 +131,6 @@ std::optional< std::tuple<std::string, model::Map::Id> > ParseJoinToGameRequest(
     } catch(...) {
         return std::nullopt;
     }
-};
-
-std::string CreateGameStateResponse(const std::vector< std::weak_ptr<model::Player> >& players) {
-    json::value jv;
-    json::object obj;
-
-    for(auto item : players) {
-        auto player = item.lock();
-        auto dog = player->GetDog().lock();
-        std::stringstream ss;
-        ss << *(player->GetId());
-        json::array pos = {dog->GetPosition().x, dog->GetPosition().y};
-        json::array speed = {dog->GetVelocity().vx, dog->GetVelocity().vy};
-        json::value jv_item = {{json_keys::RESPONSE_DOG_POSITION, pos},
-                               {json_keys::RESPONSE_DOG_VELOCITY, speed},
-                               {json_keys::RESPONSE_DOG_DIRECTION, model::DIRECTION_TO_STRING.at(dog->GetDirection())}};
-        obj[ss.str()] = jv_item;
-    }
-
-    jv.emplace_object()[json_keys::RESPONSE_PLAYERS] = obj;
-    return json::serialize(jv);
 };
 
 }

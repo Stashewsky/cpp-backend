@@ -26,8 +26,8 @@ public:
     const std::string& GetName() const;
     const model::GameSession::Id& GetGameSessionId() const;
     void SetGameSession(std::weak_ptr<GameSession> session);
-    void SetDog(std::weak_ptr<Dog> dog);
     std::weak_ptr<Dog> GetDog();
+    void SetDog(std::weak_ptr<Dog> dog);
 
 private:
     Id id_;

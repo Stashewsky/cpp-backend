@@ -2,10 +2,11 @@
 #include "tagged.h"
 
 #include <string>
+#include <unordered_map>
 
 namespace model {
 
-enum class Direction{
+enum class Direction {
     NORTH,
     SOUTH,
     WEST,
@@ -13,27 +14,25 @@ enum class Direction{
 };
 
 const std::unordered_map<Direction, std::string> DIRECTION_TO_STRING = {
-        {Direction::NORTH, "U"},
-        {Direction::SOUTH, "D"},
-        {Direction::WEST, "L"},
-        {Direction::EAST, "R"}
+    {Direction::NORTH, "U"},
+    {Direction::SOUTH, "D"},
+    {Direction::WEST,  "L"},
+    {Direction::EAST,  "R"}
 };
 
 const std::unordered_map<std::string, Direction> STRING_TO_DIRECTION = {
-        {"U", Direction::NORTH},
-        {"D", Direction::SOUTH},
-        {"L", Direction::WEST},
-        {"R", Direction::EAST}
+    {"U", Direction::NORTH},
+    {"D", Direction::SOUTH},
+    {"L", Direction::WEST},
+    {"R", Direction::EAST}
 };
 
-struct Position{
-    double x;
-    double y;
+struct Position {
+    double x, y;
 };
 
-struct Velocity{
-    double vx;
-    double vy;
+struct Velocity {
+    double vx, vy;
 };
 
 class Dog {
@@ -63,6 +62,7 @@ public:
 
     void SetVelocity(Velocity velocity);
     const Velocity& GetVelocity() const;
+    
 private:
     Id id_;
     std::string name_;

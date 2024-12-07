@@ -1,6 +1,5 @@
 #include "player_tokens.h"
 
-#include <iomanip>
 #include <sstream>
 
 namespace authentication {
