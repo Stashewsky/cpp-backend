@@ -1,5 +1,5 @@
 #include "application.h"
-
+#include "logger.h"
 #include <iostream>
 
 namespace app {
@@ -79,11 +79,18 @@ std::shared_ptr<Application::AppStrand> Application::GetStrand() {
 void Application::AddGameSession(std::shared_ptr<GameSession> session) {
     const size_t index = sessions_.size();
     if (auto [it, inserted] = map_id_to_session_index_.emplace(session->GetMap()->GetId(), index); !inserted) {
+        logware::ExceptionLogData exception_data(1, "Duplicate map ID", "Application::AddGameSession");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                    "Attempt to add game session failed: Duplicate map ID",
+                    exception_data
+            );
         throw std::invalid_argument("Game session with map id "s + *(session->GetMap()->GetId()) + " already exists"s);
     } else {
         try {
             sessions_.push_back(session);
-        } catch (...) {
+        } catch (const std::exception& ex) {
+            logware::ExceptionLogData exception_data(1, ex.what(), "Application::AddGameSession");
+            BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage("Exception occurred while adding game session", exception_data);
             map_id_to_session_index_.erase(it);
             throw;
         }

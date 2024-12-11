@@ -16,11 +16,11 @@ namespace json = boost::json;
 
 class Road {
     struct HorizontalTag {
-        explicit HorizontalTag() = default;
+        HorizontalTag() = default;
     };
 
     struct VerticalTag {
-        explicit VerticalTag() = default;
+        VerticalTag() = default;
     };
 
 public:
@@ -60,6 +60,4 @@ private:
 
 void tag_invoke(json::value_from_tag, json::value& jv, const Road& road);
 Road tag_invoke(json::value_to_tag<Road>, const json::value& jv);
-
-
 }

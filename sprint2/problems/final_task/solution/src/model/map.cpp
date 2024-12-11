@@ -1,4 +1,5 @@
 #include "map.h"
+#include "logger.h"
 #include "model_key_storage.h"
 
 #include <stdexcept>
@@ -106,7 +107,12 @@ Map tag_invoke(json::value_to_tag<Map>, const json::value& jv) {
     try {
         double dog_velocity = json::value_to<double>(jv.as_object().at(MAP_DOG_VELOCITY));
         map.SetDogVelocity(dog_velocity);
-    } catch(...) {}
+    } catch (const std::exception& ex) {
+        logware::ExceptionLogData exception_data(1, ex.what(), "map.cpp, tag_invoke<Map>");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                "Exception occurred while setting dog velocity on the map",
+                exception_data);
+    }
     return map;
 };
 

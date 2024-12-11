@@ -42,7 +42,12 @@ model::Game LoadGame(const std::filesystem::path& json_path) {
     try {
         double default_dog_velocity = boost::json::value_to<double>(jsonVal.as_object().at(model::DEFAULT_DOG_VELOCITY));
         game.SetDefaultDogVelocity(default_dog_velocity);
-    } catch(...) {}
+    }catch (const std::exception& ex) {
+        logware::ExceptionLogData exception_data(1, ex.what(), "JsonLoader::LoadGame");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                "Exception occurred while setting default dog velocity",
+                exception_data);
+    }
     return game;
 };
 

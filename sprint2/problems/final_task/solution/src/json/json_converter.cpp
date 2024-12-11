@@ -1,4 +1,5 @@
 #include "json_converter.h"
+#include "logger.h"
 #include "model_key_storage.h"
 #include "json_key_storage.h"
 #include <map>
@@ -73,8 +74,6 @@ std::string CreateInvalidMethodResponse() {
 };
 
 std::string CreateEmptyAuthorizationResponse() {
-    //json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
-    //                    {json_keys::RESPONSE_MESSAGE, "Authorization header is missing"}}; // todo: different messages
     json::value msg = {{json_keys::RESPONSE_CODE, "invalidToken"},
                         {json_keys::RESPONSE_MESSAGE, "Authorization header is required"}};
     return json::serialize(msg);
@@ -164,7 +163,12 @@ std::optional< std::tuple<std::string, model::Map::Id> > ParseJoinToGameRequest(
         std::string player_name = json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_PLAYER_NAME));
         model::Map::Id map_id{json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_MAP_ID))};
         return std::tie(player_name, map_id);
-    } catch(...) {
+    } catch (const std::exception& ex) {
+        logware::ExceptionLogData exception_data(1, ex.what(), "JsonConverter::ParseJoinToGameRequest");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                    "Exception occurred while parsing join to game request",
+                    exception_data
+            ) << " | Input: " << msg;
         return std::nullopt;
     }
 };
@@ -174,7 +178,12 @@ std::optional<std::string> ParsePlayerActionRequest(const std::string& msg) {
         json::value jv = json::parse(msg);
         std::string direction = json::value_to<std::string>(jv.as_object().at(json_keys::REQUEST_PLAYER_MOVE));
         return direction;
-    } catch(...) {
+    } catch (const std::exception& ex) {
+        logware::ExceptionLogData exception_data(1, ex.what(), "JsonConverter::ParsePlayerActionRequest");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                    "Exception occurred while parsing player action request request",
+                    exception_data
+            ) << " | Input: " << msg;
         return std::nullopt;
     }
 };
@@ -187,7 +196,12 @@ std::optional<int> ParseSetDeltaTimeRequest(const std::string& msg) {
         }
         int time_delta = json::value_to<int>(jv.as_object().at(json_keys::REQUEST_TIME_DELTA));
         return time_delta;
-    } catch(...) {
+    } catch (const std::exception& ex) {
+        logware::ExceptionLogData exception_data(1, ex.what(), "JsonConverter::ParseSetDeltaTimeRequest");
+        BOOST_LOG_TRIVIAL(error) << logware::CreateLogMessage(
+                    "Exception occurred while parsing set delta time request",
+                    exception_data
+            ) << " | Input: " << msg;
         return std::nullopt;
     }
 };
