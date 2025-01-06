@@ -41,7 +41,7 @@ SCENARIO("TV", "[TV]") {
             REQUIRE(!tv.IsTurnedOn());
 
 // Включите эту секцию и доработайте класс TV, чтобы он проходил проверки в ней
-#if 0
+#if 1
             // он не может переключать каналы
             THEN("it can't select any channel") {
                 CHECK_THROWS_AS(tv.SelectChannel(10), std::logic_error);
@@ -74,6 +74,40 @@ SCENARIO("TV", "[TV]") {
             // И затем может выбирать канал с 1 по 99
             AND_THEN("it can select channel from 1 to 99") {
                 /* Реализуйте самостоятельно эту секцию */
+                CHECK(tv.GetChannel() == 1);
+                tv.SelectChannel(66);
+                CHECK(tv.GetChannel() == 66);
+                tv.SelectChannel(99);
+                CHECK(tv.GetChannel() == 99);
+
+                THEN("selected channel is not valid"){
+                    CHECK_THROWS_AS(tv.SelectChannel(0), std::out_of_range);
+                    CHECK_THROWS_AS(tv.SelectChannel(100), std::out_of_range);
+
+                    AND_THEN("it can't select channels if is turned off"){
+                        tv.TurnOff();
+                        CHECK_THROWS_AS(tv.SelectChannel(0), std::logic_error);
+                        CHECK(tv.GetChannel() == std::nullopt);
+                    }
+                }
+            }
+
+            AND_THEN("it can switch beetween last selected channels"){
+                tv.SelectLastViewedChannel();
+                CHECK(tv.GetChannel() == 1);
+                tv.SelectChannel(77);
+                CHECK(tv.GetChannel() == 77);
+                tv.SelectChannel(66);
+                tv.SelectLastViewedChannel();
+                CHECK(tv.GetChannel() == 77);
+                tv.SelectLastViewedChannel();
+                CHECK(tv.GetChannel() == 66);
+
+                THEN("it can't switch channels if is turned off"){
+                    tv.TurnOff();
+                    CHECK_THROWS_AS(tv.SelectLastViewedChannel(), std::logic_error);
+                    CHECK(tv.GetChannel() == std::nullopt);
+                }
             }
             /* Реализуйте самостоятельно остальные тесты */
         }

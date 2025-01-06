@@ -48,14 +48,8 @@ private:
 
         if (EnsureNoArgsInInput(INFO_COMMAND, input, output)) {
             if (tv_.IsTurnedOn()) {
-                // Эта часть метода не реализована. Реализуйте её самостоятельно
-                assert(!"Controller::ShowInfo is not implemented when TV is turned on");
-                /*
-                Выведите две строки, завершая каждую std::endl:
-
-                TV is turned on
-                Channel number is <номер канала>
-                */
+                output << "TV is turned on" << std::endl;
+                output << "Channel number is " << tv_.GetChannel().value() << std::endl;
             } else {
                 output << "TV is turned off"sv << std::endl;
             }
@@ -104,8 +98,48 @@ private:
      */
     [[nodiscard]] bool SelectChannel(std::istream& input, std::ostream& output) const {
         /* Реализуйте самостоятельно этот метод.*/
-        assert(!"TODO: Implement Controller::SelectChannel");
+        auto arg = GetValueFromInput(input);
+        if(GetValueFromInput(input)) {
+            output << "Error: Invalid number of arguments." << std::endl;
+            return false;
+        } else if(!arg) {
+            output << "Error: Empty argument." << std::endl;
+            return false;
+        }
+        int channel = 0;
+        try {
+            auto temp_ch = std::stod(arg.value());
+            if(std::abs(temp_ch - std::floor(temp_ch)) > 0.0000001) {
+                output << "Error: Invalid channel." << std::endl;
+                return false;
+            }
+            channel = std::stoi(arg.value());
+        } catch(std::invalid_argument& e) {
+            output << "Error: Invalid channel." << std::endl;
+            return false;
+        }
+        try {
+            tv_.SelectChannel(channel);
+        } catch(std::out_of_range& e) {
+            output << "Error: Channel is out of range." << std::endl;
+            return false;
+        } catch(std::logic_error& e) {
+            output << "TV is turned off" << std::endl;
+            return false;
+        }
+        output << "TV is turned on" << std::endl;
+        output << "Channel number is " << tv_.GetChannel().value() << std::endl;
         return true;
+    }
+
+    [[nodiscard]] std::optional<std::string> GetValueFromInput(std::istream& input) const {
+        using namespace std::literals;
+        std::string data;
+        input >> data;
+        if(data.empty()) {
+            return std::nullopt;
+        }
+        return data;
     }
 
     /*
@@ -115,7 +149,16 @@ private:
      */
     [[nodiscard]] bool SelectPreviousChannel(std::istream& input, std::ostream& output) const {
         /* Реализуйте самостоятельно этот метод */
-        assert(!"TODO: Implement Controller::SelectPreviousChannel");
+        if(EnsureNoArgsInInput(SELECT_PREVIOUS_CHANNEL_COMMAND, input, output)) {
+            try {
+                tv_.SelectLastViewedChannel();
+                output << "TV is turned on" << std::endl;
+                output << "Channel number is " << tv_.GetChannel().value() << std::endl;
+            } catch (std::logic_error& e){
+                output << "TV is turned off" << std::endl;
+                return false;
+            }
+        }
         return true;
     }
 

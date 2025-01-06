@@ -46,7 +46,18 @@ public:
      */
     void SelectChannel(int channel) {
         /* Реализуйте самостоятельно этот метод и напишите тесты для него */
-        assert(!"TODO: Implement TV::SelectChannel");
+        if(is_turned_on_){
+            if(channel >= MIN_CHANNEL && channel <= MAX_CHANNEL){
+                if(channel != channel_){
+                    prev_channel = channel_;
+                    channel_ = channel;
+                }
+            }else{
+                throw std::out_of_range("Invalid channel num! Please? select from 1 to 99");
+            }
+        }else{
+            throw std::logic_error("Can't select channel! TV is turned off!");
+        }
     }
 
     /*
@@ -56,10 +67,20 @@ public:
      */
     void SelectLastViewedChannel() {
         /* Реализуйте самостоятельно этот метод и напишите тесты для него */
-        assert(!"TODO: Implement TV::SelectLastViewedChannel");
+        if(is_turned_on_) {
+            if (prev_channel != 0) {
+                int tmp;
+                tmp = channel_;
+                channel_ = prev_channel;
+                prev_channel = tmp;
+            }
+        }else{
+            throw std::logic_error("Can't select last channel! TV is turned off!");
+        }
     }
 
 private:
     bool is_turned_on_ = false;
     int channel_ = 1;
+    int prev_channel = 0;
 };

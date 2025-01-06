@@ -98,7 +98,7 @@ SCENARIO("Controller", "[Controller]") {
                 }
             }
 // Включите эту секцию, после того как реализуете метод TV::SelectChannel
-#if 0
+#if 1
             AND_WHEN("Info command is entered without arguments") {
                 tv.SelectChannel(12);
                 run_menu_command("Info"s);
