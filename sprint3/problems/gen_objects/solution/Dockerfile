@@ -17,13 +17,14 @@ RUN mkdir /app/build && cd /app/build && \
 COPY ./src /app/src
 COPY ./data /app/data
 COPY ./static /app/static
+COPY ./tests /app/tests
 COPY CMakeLists.txt /app/
 
 RUN cd /app/build && \
     cmake -DCMAKE_BUILD_TYPE=Release .. && \
     cmake --build .
-    
-    
+
+
 # Второй контейнер в том же докерфайле
 FROM ubuntu:22.04 as run
 
@@ -38,4 +39,4 @@ COPY ./data /app/data
 COPY ./static /app/static
 
 # Запускаем игровой сервер
-ENTRYPOINT ["/app/game_server", "-t", "10", "-c", "/app/data/config.json", "-w", "/app/static"]
+ENTRYPOINT ["/app/game_server", "/app/data/config.json", "/app/static"]
