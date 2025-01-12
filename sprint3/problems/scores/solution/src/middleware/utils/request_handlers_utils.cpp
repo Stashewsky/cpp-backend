@@ -12,8 +12,10 @@ const size_t TOKEN_INDEX = 1;
 std::vector<std::string_view> SplitUrl(std::string_view str) {
     std::vector<std::string_view> result;
     std::string delim = "/";
-    if(str.empty() or str == delim) return result;
-    auto start = 1U; // Ignore first slash
+    if(str.empty() || str == delim){
+        return result;
+    }
+    auto start = 1U; // Игнорируем первый слеш
     auto end = str.find(delim, start);
     while (end != std::string::npos) {
         result.push_back(str.substr(start, end - start));
@@ -28,7 +30,7 @@ std::string GetTokenString(std::string_view bearer_string) {
     std::string token;
     std::vector<std::string_view> splitted;
     std::string delim = " ";
-    if(bearer_string.empty() or bearer_string == delim) {
+    if(bearer_string.empty() || bearer_string == delim) {
         return token;
     }
     auto start = 0U;
