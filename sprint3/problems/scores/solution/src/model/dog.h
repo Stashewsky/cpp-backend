@@ -51,8 +51,8 @@ public:
 
     const BagType& GetBag() const;
     void CollectLostObject(std::shared_ptr<LostObject> loot);
-    bool IsFullBag();
-    bool IsEmptyBag();
+    bool IsFullBag() const;
+    bool IsEmptyBag() const;
     void DropLostObjectsFromBag();
 
     const size_t GetScore() const;

@@ -84,11 +84,11 @@ void Dog::CollectLostObject(std::shared_ptr<LostObject> loot) {
     }
 };
 
-bool Dog::IsFullBag() {
+bool Dog::IsFullBag() const {
     return bag_.size() >= bag_capacity_;
 };
 
-bool Dog::IsEmptyBag() {
+bool Dog::IsEmptyBag() const {
     return bag_.empty();
 };
 
