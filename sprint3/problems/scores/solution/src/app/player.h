@@ -10,7 +10,7 @@ class Player {
     inline static size_t max_id_cont_ = 0;
 public:
     using Id = util::Tagged<size_t, Player>;
-    Player(std::string name) : 
+    explicit Player(std::string name) :
         id_(Id{Player::max_id_cont_++}),
         name_(name) {};
     Player(Id id, std::string name) :
