@@ -37,7 +37,7 @@ public:
     const std::vector< std::shared_ptr<Player> >& GetPlayersFromGameSession(const authentication::Token& token);
     bool IsExistPlayer(const authentication::Token& token);
     void SetPlayerAction(const authentication::Token& token, model::Direction direction);
-    bool IsManualTimeManagement();
+    bool IsManualTimeManagement() const;
     void UpdateGameState(const std::chrono::milliseconds& delta_time);
     void AddGameSession(std::shared_ptr<GameSession> session);
     std::shared_ptr<GameSession> FindGameSessionBy(const model::Map::Id& id) const noexcept;

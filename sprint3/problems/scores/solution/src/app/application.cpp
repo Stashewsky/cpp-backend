@@ -63,7 +63,7 @@ void Application::SetPlayerAction(const authentication::Token& token, model::Dir
     dog->SetAction(direction, velocity);
 };
 
-bool Application::IsManualTimeManagement() {
+bool Application::IsManualTimeManagement() const{
     return tick_period_.count() == 0;
 };
 
