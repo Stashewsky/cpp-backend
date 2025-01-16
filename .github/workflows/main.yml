@@ -173,6 +173,7 @@ jobs:
 
 #      - run: chmod +x ${GITHUB_WORKSPACE}/sprint1/problems/map_json/solution/build/bin/game_server
 
+
       # - name: Load FlameGraph
       #   uses: actions/checkout@v3
       #   with:
@@ -235,6 +236,7 @@ jobs:
       #   run: |
       #     cd cpp-backend-tests-practicum/scripts/sprint3
       #     ./find_return/run.sh
+
 
       - name: run tests sprint3 scores
         run: |
