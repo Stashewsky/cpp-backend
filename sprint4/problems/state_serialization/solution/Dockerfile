@@ -20,7 +20,6 @@ COPY ./src /app/src
 COPY ./data /app/data
 COPY ./static /app/static
 COPY ./tests /app/tests
-COPY ./state /app/state
 COPY CMakeLists.txt /app/
 
 RUN cd /app/build && \
