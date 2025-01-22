@@ -48,6 +48,7 @@ add_library (game_server_lib STATIC
 	src/records_player.h
 	src/tagged_uuid.cpp
 	src/tagged_uuid.h
+	src/ticker.h
 )
 target_include_directories(game_server_lib PUBLIC  CONAN_PKG::boost)
 target_link_libraries(game_server_lib PUBLIC CONAN_PKG::boost Threads::Threads)
@@ -66,6 +67,7 @@ add_executable(game_server
 	src/response.h
 	src/token.h
 	src/token.cpp
+	src/ticker.h
 	src/uri_api.h
 	src/static_request.cpp
 	src/static_request.h

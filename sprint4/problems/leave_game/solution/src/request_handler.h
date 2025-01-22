@@ -81,13 +81,15 @@ namespace http_handler {
         std::ostream& os_;
     };
 
-//===================================================
     template<class SomeRequestHandler>
     class LoggingRequestHandler {
         template <typename Body, typename Allocator, typename Send>
         static void LogRequest(net::ip::tcp::endpoint&& endpoint, http::request<Body, http::basic_fields<Allocator>>&& req) {
-            json::value request_data{{"ip", endpoint.address().to_string()}, {"URI", std::string(req.target())}, {"method", req.method_string()}};
-            BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, request_data) << "request received"sv;
+            json::value request_data{{"ip", endpoint.address().to_string()},
+                                     {"URI", std::string(req.target())},
+                                     {"method", req.method_string()}};
+            BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, request_data)
+                                    << "request received"sv;
         }
 
         template <typename Func, typename Resp>
@@ -98,24 +100,24 @@ namespace http_handler {
             send(resp);
             auto finish = steady_clock::now();
             int resp_time = duration_cast<milliseconds>(finish-start).count();
-            json::value response_data{{"response_time", resp_time}, {"code", resp.result_int()}, {"content_type", cont_type}};
-            BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, response_data) << "response sent"sv;
+            json::value response_data{{"response_time", resp_time},
+                                      {"code", resp.result_int()},
+                                      {"content_type", cont_type}};
+            BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, response_data)
+                                    << "response sent"sv;
         }
     public:
         explicit LoggingRequestHandler(SomeRequestHandler handler) : decorated_(handler){}
 
         template <typename Body, typename Allocator, typename Send>
         void operator()( http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send) {
-            //LogRequest(req);
             decorated_( std::move(req), std::move(send));
-            //LogResponse(send);
         }
 
     private:
         SomeRequestHandler decorated_;
     };
 
-//==========================================
 template <typename Func, typename Resp>
 void ResponseLogger(Func send, Resp resp){
         std::string cont_type;
@@ -128,7 +130,6 @@ void ResponseLogger(Func send, Resp resp){
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, response_data) << "response sent"sv;
 }
 
-//==========================================
     class RequestHandler : public std::enable_shared_from_this<RequestHandler> {
     public:
         using Strand = net::strand<net::io_context::executor_type>;
@@ -140,15 +141,12 @@ void ResponseLogger(Func send, Resp resp){
         RequestHandler(const RequestHandler&) = delete;
         RequestHandler& operator=(const RequestHandler&) = delete;
 
-        //TODO:net::ip::tcp::endpoint endpoint,
         template <typename Body, typename Allocator, typename Send>
         void operator()(net::ip::tcp::endpoint endpoint, http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send)
         {
-            // endpoint.address().to_string()
             json::value request_data{{"ip", endpoint.address().to_string()}, {"URI", std::string(req.target())}, {"method", req.method_string()}};
             BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, request_data) << "request received"sv;
 
-            //std::variant<StringResponse, FileResponse, EmptyBodyResponse>
             if(ApiRequestHandler::IsApiRequest(req)){
 
                 auto handle = [self = shared_from_this(), &send, &req ] {

@@ -1,7 +1,7 @@
 #include "sdk.h"
 
 #include "magic_defs.h"
-//
+#include "ticker.h"
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/signal_set.hpp>
 #include <boost/program_options.hpp>
@@ -23,6 +23,9 @@ namespace sys = boost::system;
 namespace json = boost::json;
 namespace logging = boost::log;
 
+constexpr const char DB_URL_ENV_NAME[]{"GAME_DB_URL"};
+//GAME_DB_URL=postgres://postgres:Passwd@localhost:30432/game_db1
+
 namespace {
 
 // Запускает функцию fn на n потоках, включая текущий
@@ -37,75 +40,6 @@ void RunWorkers(unsigned n, const Fn& fn) {
     }
     fn();
 }
-
-//------------------------
-    class Ticker : public std::enable_shared_from_this<Ticker> {
-    public:
-        using Strand = net::strand<net::io_context::executor_type>;
-        using Handler = std::function<void(std::chrono::milliseconds delta)>;
-
-        // Функция handler будет вызываться внутри strand с интервалом period
-        Ticker(Strand strand, std::chrono::milliseconds period, Handler handler)
-                : strand_{strand}
-                , period_{period}
-                , handler_{std::move(handler)} {
-        }
-
-        void Start() {
-            net::dispatch(strand_, [self = shared_from_this(), this] {
-                last_tick_ = Clock::now();
-                self->ScheduleTick();
-            });
-        }
-
-    private:
-        void ScheduleTick() {
-            assert(strand_.running_in_this_thread());
-            timer_.expires_after(period_);
-            timer_.async_wait([self = shared_from_this()](sys::error_code ec) {
-                self->OnTick(ec);
-            });
-        }
-
-        void OnTick(sys::error_code ec) {
-            using namespace std::chrono;
-            assert(strand_.running_in_this_thread());
-
-            if (!ec) {
-                auto this_tick = Clock::now();
-                auto delta = duration_cast<milliseconds>(this_tick - last_tick_);
-                last_tick_ = this_tick;
-                try {
-                    handler_(delta);
-                } catch (...) {
-                }
-                ScheduleTick();
-            }
-        }
-
-        using Clock = std::chrono::steady_clock;
-
-        Strand strand_;
-        std::chrono::milliseconds period_;
-        net::steady_timer timer_{strand_};
-        Handler handler_;
-        std::chrono::steady_clock::time_point last_tick_;
-    };
-
-//------------------------
-    constexpr const char DB_URL_ENV_NAME[]{"GAME_DB_URL"};
-    //GAME_DB_URL=postgres://postgres:Passwd@localhost:30432/game_db1
-
-    app::AppConfig GetConfigFromEnv() {
-        app::AppConfig config;
-        if (const auto* url = std::getenv(DB_URL_ENV_NAME)) {
-            config.db_url = url;
-        } else {
-            throw std::runtime_error(DB_URL_ENV_NAME + " environment variable not found"s);
-        }
-        return config;
-    }
-
 }  // namespace
 
 int main(int argc, const char* argv[]) {
@@ -118,7 +52,14 @@ int main(int argc, const char* argv[]) {
             return EXIT_FAILURE;
         }
 
-        app::Application app(*args, GetConfigFromEnv());
+        app::AppConfig config;
+        if (const auto* url = std::getenv(DB_URL_ENV_NAME)) {
+            config.db_url = url;
+        } else {
+            throw std::runtime_error(DB_URL_ENV_NAME + " environment variable not found"s);
+        }
+
+        app::Application app(*args, config);
         app.RestoreBackUpData();
 
         // 2. Инициализируем io_context
@@ -139,7 +80,6 @@ int main(int argc, const char* argv[]) {
 
         if(args->tick_period){
             auto period = static_cast<std::chrono::milliseconds>(args->tick_period);
-            // Настраиваем вызов метода Application::Tick каждые 50 миллисекунд внутри strand
             auto ticker = std::make_shared<Ticker>(api_strand, period,
                                                    [&app](std::chrono::milliseconds delta) { app.Tick(delta); }
             );
@@ -168,7 +108,6 @@ int main(int argc, const char* argv[]) {
         json_logger::SetupLogger();
         json::value start_data{{"port"s, ServerParam::PORT}, {"address", ServerParam::ADDR}};
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, start_data) << "server started"sv;
-        //std::cerr << ServerMessage::START << std::endl;
 
         // 6. Запускаем обработку асинхронных операций
         RunWorkers(std::max(1u, num_threads), [&ioc] {
@@ -177,10 +116,8 @@ int main(int argc, const char* argv[]) {
 
         app.BackUpData();
 
-        //TODO: finish
         json::value finish_data{{"code"s, 0}};
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, finish_data) << "server exited"sv;
-        //std::cerr << ServerMessage::EXIT << std::endl;
 
     } catch (const std::exception& ex) {
         json::value finish_data{{"code"s, 1}, {"exception", ex.what()}};
