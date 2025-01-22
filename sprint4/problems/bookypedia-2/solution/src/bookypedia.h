@@ -1,24 +1,24 @@
 #pragma once
 #include <pqxx/pqxx>
 
-#include "postgres.h"
-#include "use_cases_impl.h"
+#include "app/use_cases_impl.h"
+#include "postgres/postgres.h"
 
 namespace bookypedia {
 
 struct AppConfig {
-    std::string db_url;
+  std::string db_url;
 };
 
 class Application {
 public:
-    explicit Application(const AppConfig& config);
+  explicit Application(const AppConfig &config);
 
-    void Run();
+  void Run();
 
 private:
-    postgres::Database db_;
-    app::UseCasesImpl use_cases_{db_.GetAuthors(), db_.GetBooks()};
+  postgres::Database db_;
+  app::UseCasesImpl use_cases_{db_.GetUOWFactory()};
 };
 
-}  // namespace bookypedia
+} // namespace bookypedia
