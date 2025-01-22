@@ -2,6 +2,7 @@
 
 #include "magic_defs.h"
 #include "ticker.h"
+
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/signal_set.hpp>
 #include <boost/program_options.hpp>
@@ -63,7 +64,7 @@ int main(int argc, const char* argv[]) {
         app.RestoreBackUpData();
 
         // 2. Инициализируем io_context
-        const unsigned num_threads = 1; //std::thread::hardware_concurrency();
+        const unsigned num_threads = 1;
         net::io_context ioc(num_threads);
 
         // 3. Добавляем асинхронный обработчик сигналов SIGINT и SIGTERM
