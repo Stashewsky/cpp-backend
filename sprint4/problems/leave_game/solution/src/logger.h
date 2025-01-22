@@ -17,17 +17,19 @@
 
 #include <boost/json.hpp>
 
-namespace json_loader {
-    namespace logging = boost::log;
+namespace json_logger {
+    using namespace std::literals;
+    namespace keywords = boost::log::keywords;
+    namespace sinks = boost::log::sinks;
     namespace json = boost::json;
+    namespace logging = boost::log;
+    namespace sys = boost::system;
 
     BOOST_LOG_ATTRIBUTE_KEYWORD(timestamp, "TimeStamp", boost::posix_time::ptime)
     BOOST_LOG_ATTRIBUTE_KEYWORD(additional_data, "AdditionalData", json::value)
 
     void MyFormatter(logging::record_view const &rec, logging::formatting_ostream &strm);
     void SetupLogger();
-
-
 }
 
 

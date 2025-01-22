@@ -17,8 +17,11 @@
 
 using namespace std::literals;
 using namespace json_loader;
+using namespace json_logger;
 namespace net = boost::asio;
 namespace sys = boost::system;
+namespace json = boost::json;
+namespace logging = boost::log;
 
 namespace {
 
@@ -35,6 +38,7 @@ void RunWorkers(unsigned n, const Fn& fn) {
     fn();
 }
 
+//------------------------
     class Ticker : public std::enable_shared_from_this<Ticker> {
     public:
         using Strand = net::strand<net::io_context::executor_type>;
@@ -88,7 +92,9 @@ void RunWorkers(unsigned n, const Fn& fn) {
         std::chrono::steady_clock::time_point last_tick_;
     };
 
+//------------------------
     constexpr const char DB_URL_ENV_NAME[]{"GAME_DB_URL"};
+    //GAME_DB_URL=postgres://postgres:Passwd@localhost:30432/game_db1
 
     app::AppConfig GetConfigFromEnv() {
         app::AppConfig config;
@@ -101,39 +107,6 @@ void RunWorkers(unsigned n, const Fn& fn) {
     }
 
 }  // namespace
-
-namespace {
-    using namespace std::literals;
-    namespace logging = boost::log;
-    namespace keywords = boost::log::keywords;
-    namespace sinks = boost::log::sinks;
-    namespace json = boost::json;
-    namespace sys = boost::system;
-
-    BOOST_LOG_ATTRIBUTE_KEYWORD(timestamp, "TimeStamp", boost::posix_time::ptime)
-    BOOST_LOG_ATTRIBUTE_KEYWORD(additional_data, "AdditionalData", json::value)
-
-    void LogFormatter(logging::record_view const &rec, logging::formatting_ostream &strm) {
-
-        auto ts = *rec[timestamp];
-        json::object jobject;
-        jobject.emplace("timestamp", to_iso_extended_string(ts));
-        jobject.emplace("data", *rec[additional_data]);
-        jobject.emplace("message", *rec[logging::expressions::smessage]);
-        std::string str = json::serialize(jobject);
-        strm << str;
-    }
-
-    void SetupLogger() {
-        logging::add_common_attributes();
-        logging::add_console_log(
-                std::cout,
-                keywords::format = &LogFormatter,
-                keywords::auto_flush = true
-        );
-    }
-}
-
 
 int main(int argc, const char* argv[]) {
     try {
@@ -192,9 +165,10 @@ int main(int argc, const char* argv[]) {
         // 5. Запустить обработчик HTTP-запросов, делегируя их обработчику запросов
         http_server::ServeHttp(ioc, {address, port}, logging_handler);
 
-        SetupLogger();
+        json_logger::SetupLogger();
         json::value start_data{{"port"s, ServerParam::PORT}, {"address", ServerParam::ADDR}};
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, start_data) << "server started"sv;
+        //std::cerr << ServerMessage::START << std::endl;
 
         // 6. Запускаем обработку асинхронных операций
         RunWorkers(std::max(1u, num_threads), [&ioc] {
@@ -203,8 +177,10 @@ int main(int argc, const char* argv[]) {
 
         app.BackUpData();
 
+        //TODO: finish
         json::value finish_data{{"code"s, 0}};
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, finish_data) << "server exited"sv;
+        //std::cerr << ServerMessage::EXIT << std::endl;
 
     } catch (const std::exception& ex) {
         json::value finish_data{{"code"s, 1}, {"exception", ex.what()}};

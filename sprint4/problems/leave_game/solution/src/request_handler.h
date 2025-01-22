@@ -35,8 +35,8 @@ namespace http_handler {
     namespace fs = std::filesystem;
     using namespace std::literals;
     using namespace std::chrono;
+    using namespace json_logger;
 
-    BOOST_LOG_ATTRIBUTE_KEYWORD(additional_data, "AdditionalData", json::value)
 
     class SyncWriteOStreamAdapter {
     public:
@@ -81,6 +81,7 @@ namespace http_handler {
         std::ostream& os_;
     };
 
+//===================================================
     template<class SomeRequestHandler>
     class LoggingRequestHandler {
         template <typename Body, typename Allocator, typename Send>
@@ -114,6 +115,7 @@ namespace http_handler {
         SomeRequestHandler decorated_;
     };
 
+//==========================================
 template <typename Func, typename Resp>
 void ResponseLogger(Func send, Resp resp){
         std::string cont_type;
@@ -126,7 +128,7 @@ void ResponseLogger(Func send, Resp resp){
         BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, response_data) << "response sent"sv;
 }
 
-
+//==========================================
     class RequestHandler : public std::enable_shared_from_this<RequestHandler> {
     public:
         using Strand = net::strand<net::io_context::executor_type>;
@@ -138,12 +140,15 @@ void ResponseLogger(Func send, Resp resp){
         RequestHandler(const RequestHandler&) = delete;
         RequestHandler& operator=(const RequestHandler&) = delete;
 
+        //TODO:net::ip::tcp::endpoint endpoint,
         template <typename Body, typename Allocator, typename Send>
         void operator()(net::ip::tcp::endpoint endpoint, http::request<Body, http::basic_fields<Allocator>>&& req, Send&& send)
         {
+            // endpoint.address().to_string()
             json::value request_data{{"ip", endpoint.address().to_string()}, {"URI", std::string(req.target())}, {"method", req.method_string()}};
             BOOST_LOG_TRIVIAL(info) << logging::add_value(additional_data, request_data) << "request received"sv;
 
+            //std::variant<StringResponse, FileResponse, EmptyBodyResponse>
             if(ApiRequestHandler::IsApiRequest(req)){
 
                 auto handle = [self = shared_from_this(), &send, &req ] {
@@ -158,6 +163,7 @@ void ResponseLogger(Func send, Resp resp){
                 return net::dispatch(api_strand_, handle);
             }
             else{
+                //STATIC file
                 auto variant_resp = static_handler_.Handle(req);
                 if(std::holds_alternative<StringResponse>(variant_resp)){
 

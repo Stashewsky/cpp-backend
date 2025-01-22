@@ -6,9 +6,9 @@
 #include <iostream>
 
 namespace http_server {
+    using namespace json_logger;
     namespace json = boost::json;
     namespace logging = boost::log;
-    BOOST_LOG_ATTRIBUTE_KEYWORD(additional_data, "AdditionalData", json::value)
 
 	void ReportError(beast::error_code ec, std::string_view what) {
         json::value error_data{{"code", ec.value()}, {"text", ec.message()}, {"where", what}};
