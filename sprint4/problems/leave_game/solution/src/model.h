@@ -418,7 +418,7 @@ namespace model {
         void SetDefaultRetirementTime(double dog_retirement_time_ms);
         double GetDefaultRetirementTime() const;
 
-        std::vector<std::shared_ptr<GameSession>> GetGameSessions();
+        std::vector<std::shared_ptr<GameSession>> GetGameSessions() const;
         void ComputeRoadRTree();
 
         void SetLootGeneratorConfig(double period, double probability);

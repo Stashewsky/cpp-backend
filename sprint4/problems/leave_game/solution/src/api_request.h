@@ -55,7 +55,7 @@ namespace http_handler
         StringResponse ProcessGetPlayersList(const Token& token, std::string_view body);
         StringResponse ProcessGetGameState(const Token& token, std::string_view body);
         StringResponse ProcessPlayerAction(const Token& token, std::string body);
-        StringResponse ProcessGetMaps(const std::string& target, const std::string& body);
+        StringResponse ProcessGetMaps(const std::string& target, const std::string& body) const;
         StringResponse ProcessGetMapId(const std::string& target, const std::string& body);
 
         template <typename Body, typename Allocator>

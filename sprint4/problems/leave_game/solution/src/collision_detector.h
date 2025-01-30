@@ -78,20 +78,7 @@ namespace collision_detector {
 
     class CompareEvents {
     public:
-        bool operator()(const GatheringEvent& lhs, const GatheringEvent& rhs) {
-            if (lhs.gatherer_id != rhs.gatherer_id || lhs.item_id != rhs.item_id){
-                return false;
-            }
-            static const double eps = 1e-10;
-
-            if (std::abs(lhs.sq_distance - rhs.sq_distance) > eps) {
-                return false;
-            }
-            if (std::abs(lhs.time - rhs.time) > eps) {
-                return false;
-            }
-            return true;
-        }
+        bool operator()(const GatheringEvent& lhs, const GatheringEvent& rhs) const;
     };
 
     std::vector<GatheringEvent> FindGatherEvents(const ItemGathererProvider& provider);

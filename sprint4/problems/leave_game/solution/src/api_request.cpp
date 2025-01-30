@@ -111,7 +111,7 @@ namespace http_handler
         }
     }
 
-    StringResponse ApiRequestHandler::ProcessGetMaps(const std::string& target, const std::string& body) {
+    StringResponse ApiRequestHandler::ProcessGetMaps(const std::string& target, const std::string& body) const {
 
         std::string json_response = json_loader::GetGameMaps(application_.GetGameModel());
         return Response::Make(http::status::ok, json_response );
@@ -301,18 +301,21 @@ namespace http_handler
         int maxItems = Records::RECORDS_MAXITEMS;
         size_t st1 = target.find('?');
         size_t st2 = target.find('&');
+
+        const size_t start_param = 7;
+        const size_t max_items_param = 10;
         if( st1 != std::string::npos)
         {
             size_t size = target.size();
-            size_t pos_st1 = st1 + 7;
+            size_t pos_st1 = st1 + start_param;
             size_t count_st1 = st2 - pos_st1;
             std::string start_str = target.substr(pos_st1, count_st1);
             start = std::stoi(start_str);
 
-            size_t pos_st2 = st2 + 10;
+            size_t pos_st2 = st2 + max_items_param;
             size_t count_st2 = size - pos_st2;
             std::string maxItems_str = target.substr(pos_st2, count_st2);
-            maxItems=std::stoi(maxItems_str);
+            maxItems = std::stoi(maxItems_str);
         }
 
         if(maxItems > Records::RECORDS_MAXITEMS){
@@ -333,7 +336,7 @@ namespace http_handler
         }
 
         std::string response_string = json::serialize(jlist_records);
-        return Response::Make( http::status::ok, response_string );
+        return Response::Make(http::status::ok, response_string);
     }
 
 

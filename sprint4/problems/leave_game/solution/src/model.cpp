@@ -1,6 +1,7 @@
 #include "model.h"
 
 #include <stdexcept>
+#include <cassert>
 
 namespace model {
 using namespace std::literals;
@@ -243,7 +244,7 @@ using namespace std::chrono_literals;
         return game_default_speed_;
     }
 
-    std::vector<std::shared_ptr<GameSession>> Game::GetGameSessions() {
+    std::vector<std::shared_ptr<GameSession>> Game::GetGameSessions() const {
         return sessions_;
     }
 
@@ -340,7 +341,7 @@ using namespace std::chrono_literals;
             throw std::logic_error("GameSession::GenerateLoot() map_ == nullptr");
         }
 
-        for(int i=0; i<nb_loot; i++){
+        for(int i = 0; i < nb_loot; i++){
             Loot loot;
             loot.type = map_->GetRandomLootType();
             loot.pos = map_->GetRandomCoordOnRoads();
@@ -456,6 +457,8 @@ using namespace std::chrono_literals;
                 direct_ = Direction::STOP;
                 speed_ = {0.0, 0.0};
                 break;
+            default:
+                assert(false);
         }
     }
 

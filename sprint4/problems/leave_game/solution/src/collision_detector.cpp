@@ -22,6 +22,21 @@ namespace collision_detector {
         return CollectionResult(sq_distance, proj_ratio);
     }
 
+    bool CompareEvents::operator()(const GatheringEvent& lhs, const GatheringEvent& rhs) const {
+        if (lhs.gatherer_id != rhs.gatherer_id || lhs.item_id != rhs.item_id){
+            return false;
+        }
+        static const double eps = 1e-10;
+
+        if (std::abs(lhs.sq_distance - rhs.sq_distance) > eps) {
+            return false;
+        }
+        if (std::abs(lhs.time - rhs.time) > eps) {
+            return false;
+        }
+        return true;
+    }
+
     std::vector<GatheringEvent> FindGatherEvents(const ItemGathererProvider& provider) {
         std::vector<GatheringEvent> detected_events;
 

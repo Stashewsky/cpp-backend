@@ -49,7 +49,7 @@ int main(int argc, const char* argv[]) {
         // 1. Загружаем карту из файла и построить модель игры
         auto args = options::ParseCommandLine(argc, argv);
         if(!args.has_value()){
-            throw std::runtime_error("Can't parsing program options"s);
+            std::cout << "Can't parsing program options" << std::endl;
             return EXIT_FAILURE;
         }
 
